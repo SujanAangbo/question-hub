@@ -1,0 +1,41 @@
+import 'package:flutter/material.dart';
+
+import '../../theme/color_palette.dart';
+
+enum SnackBarStatus {
+  success,
+  error,
+  warning,
+  info;
+
+  Color get getStatusColor {
+    switch (this) {
+      case SnackBarStatus.success:
+        return ColorPalette.success;
+      case SnackBarStatus.error:
+        return ColorPalette.error;
+      case SnackBarStatus.warning:
+        return ColorPalette.warning;
+      case SnackBarStatus.info:
+        return ColorPalette.info;
+    }
+  }
+}
+
+void showSnackBar({
+  required BuildContext context,
+  required String message,
+  SnackBarStatus status = SnackBarStatus.info,
+}) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      backgroundColor: status.getStatusColor,
+      content: Text(
+        message,
+        style: Theme.of(
+          context,
+        ).textTheme.bodyLarge?.copyWith(color: ColorPalette.onError),
+      ),
+    ),
+  );
+}
