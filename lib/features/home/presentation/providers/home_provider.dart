@@ -1,11 +1,12 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:question_hub/core/response/result_states.dart';
-import 'package:question_hub/features/home/data/models/subject_model.dart';
+import 'package:question_hub/features/course/presentation/providers/course_provider.dart';
 import 'package:question_hub/features/home/data/repository/home_repository_impl.dart';
 import 'package:question_hub/features/home/domain/repository/home_repository.dart';
+
+import '../../../../models/subject_model.dart';
 
 final homeProvider = AsyncNotifierProvider(() => HomeProvider());
 
@@ -16,11 +17,12 @@ class HomeProvider extends AsyncNotifier<Map<int, List<SubjectModel>>> {
   Future<Map<int, List<SubjectModel>>> build() async {
     print("over here");
     _homeRepository = ref.watch(homeRepositoryProvider);
-    final subjects = await getCourseSubjects(4);
+    final courseData = ref.watch(courseProvider);
+    final subjects = await getCourseSubjects(
+      courseData.value!.selectedCourse!.id,
+    );
 
     final response = formatSubjectBasedOnSemester(subjects);
-
-    log(response.toString());
 
     return response;
   }
@@ -28,7 +30,6 @@ class HomeProvider extends AsyncNotifier<Map<int, List<SubjectModel>>> {
   Future<List<SubjectModel>> getCourseSubjects(int courseId) async {
     final data = await _homeRepository.getCourseSubjects(courseId);
 
-    print("data: $data");
     if (data is Success) {
       return data.data!;
     }

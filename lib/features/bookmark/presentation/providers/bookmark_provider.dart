@@ -5,7 +5,8 @@ import 'package:flutter_riverpod/legacy.dart';
 import 'package:question_hub/core/database/app_database.dart';
 import 'package:question_hub/features/bookmark/data/repository/bookmark_repository_impl.dart';
 import 'package:question_hub/features/bookmark/domain/repository/bookmark_repository.dart';
-import 'package:question_hub/features/home/data/models/question_model.dart';
+
+import '../../../../models/question_model.dart';
 
 final bookmarkProvider = AsyncNotifierProvider(() => BookmarkProvider());
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:question_hub/features/questions/presentation/widgets/year_wise_question_widget.dart';
 
-import '../../../home/data/models/pyq_model.dart';
+import '../../../../models/pyq_model.dart';
 
 class GroupQuestionWidgetPdf extends StatelessWidget {
   final List<PyqModel> questions;
@@ -26,22 +26,20 @@ class GroupQuestionWidgetPdf extends StatelessWidget {
         final key = entry.key;
         final groupQuestion = entry.value;
 
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Group: $key",
-              style: TextStyle(
-                fontFamily: 'Inter',
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-                color: Colors.black,
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Group: $key",
+                style: Theme.of(context).textTheme.titleLarge,
               ),
-            ),
 
-            // Add your question widgets here
-            YearWiseQuestionWidgetPdf(questions: groupQuestion),
-          ],
+              // Add your question widgets here
+              YearWiseQuestionWidgetPdf(questions: groupQuestion),
+            ],
+          ),
         );
       }).toList(),
     );

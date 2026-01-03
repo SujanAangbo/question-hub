@@ -8,7 +8,7 @@ class SupabaseConstants {
   // tables
   static String coursesTable = 'courses';
   static String pyqTable = 'pyq';
-  static String questionsTable = 'questions';
+  static String questionsTable = 'question';
   static String subjectsTable = 'subjects';
 
   // buckets

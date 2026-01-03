@@ -4,9 +4,10 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:question_hub/core/common/snackbar.dart';
-import 'package:question_hub/features/home/data/models/question_model.dart';
 import 'package:question_hub/features/questions/data/repository/question_repository_impl.dart';
 import 'package:question_hub/features/questions/domain/repository/question_repository.dart';
+
+import '../../../../models/question_model.dart';
 
 // final questionsProvider = AsyncNotifierProvider.family(QuestionsProvider.new);
 final questionProvider = StateNotifierProvider((ref) {

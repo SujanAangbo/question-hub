@@ -3,43 +3,38 @@ import 'package:flutter/material.dart';
 final TextTheme interTextTheme = TextTheme(
   displayLarge: TextStyle(
     inherit: true,
-    fontFamily: 'Inter',
+    fontFamily: 'PlayFair',
     fontSize: 48,
     fontWeight: FontWeight.bold,
   ),
   displayMedium: TextStyle(
     inherit: true,
-
-    fontFamily: 'Inter',
+    fontFamily: 'PlayFair',
     fontSize: 36,
     fontWeight: FontWeight.bold,
   ),
   displaySmall: TextStyle(
     inherit: true,
-
-    fontFamily: 'Inter',
+    fontFamily: 'PlayFair',
     fontSize: 30,
     fontWeight: FontWeight.bold,
   ),
 
   headlineLarge: TextStyle(
-    inherit: true,
-
-    fontFamily: 'Inter',
+    fontFamily: 'PlayFair',
     fontSize: 24,
+    // inherit: true,
     fontWeight: FontWeight.bold,
   ),
   headlineMedium: TextStyle(
-    inherit: true,
-
-    fontFamily: 'Inter',
+    // inherit: true,
+    fontFamily: 'PlayFair',
     fontSize: 22,
     fontWeight: FontWeight.w600,
   ),
   headlineSmall: TextStyle(
-    fontFamily: 'Inter',
+    fontFamily: 'PlayFair',
     inherit: true,
-
     fontSize: 20,
     fontWeight: FontWeight.w600,
   ),

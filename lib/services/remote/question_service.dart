@@ -3,9 +3,10 @@ import 'dart:developer';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:question_hub/core/constants/constants.dart';
 import 'package:question_hub/core/supabase/supabase_instance.dart';
-import 'package:question_hub/features/home/data/models/pyq_model.dart';
-import 'package:question_hub/features/home/data/models/question_model.dart';
-import 'package:question_hub/features/home/data/models/subject_model.dart';
+
+import '../../models/pyq_model.dart';
+import '../../models/question_model.dart';
+import '../../models/subject_model.dart';
 
 final questionServiceProvider = Provider((ref) => QuestionService());
 
@@ -20,12 +21,22 @@ class QuestionService {
         .toList();
   }
 
+  Future<List<dynamic>> getAllQuestion() async {
+    final response = await supabaseClient.from('question').select();
+
+    return response;
+
+    // return response
+    //     .map((questionMap) => QuestionModel.fromJson(questionMap))
+    //     .toList();
+  }
+
   Future<List<PyqModel>> getSubjectQuestions(int subjectId) async {
     final response = await supabaseClient
         .from(SupabaseConstants.pyqTable)
         .select(
           'id, course, subject, batch, created_at, updated_at, sn, '
-          'group, year, questions!inner(*) as question',
+          'group, year, question!inner(*) as question',
         )
         .eq('subject', subjectId)
         .order('year')

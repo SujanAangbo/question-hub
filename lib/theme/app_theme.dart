@@ -5,13 +5,14 @@ import 'color_palette.dart';
 
 class AppTheme {
   static OutlineInputBorder border(final Color color) => OutlineInputBorder(
-    borderRadius: BorderRadius.circular(10),
-    borderSide: BorderSide(color: color),
+    borderRadius: BorderRadius.circular(12),
+    borderSide: BorderSide(color: color, width: 2),
   );
 
   static ThemeData theme(BuildContext context) => ThemeData(
     fontFamily: 'Inter',
     useMaterial3: true,
+    scaffoldBackgroundColor: ColorPalette.onSecondary,
     colorScheme: ColorScheme.light(
       primary: ColorPalette.primary,
       onPrimary: ColorPalette.onPrimary,
@@ -28,8 +29,14 @@ class AppTheme {
     textTheme: interTextTheme,
 
     // scaffoldBackgroundColor: ColorPalette.backgroundColor,
-    appBarTheme: const AppBarTheme(
-      // backgroundColor: ColorPalette.backgroundColor,
+    appBarTheme: AppBarTheme(
+      backgroundColor: ColorPalette.primary,
+      foregroundColor: ColorPalette.white,
+      titleTextStyle: Theme.of(context).textTheme.headlineMedium?.copyWith(
+        color: ColorPalette.onPrimary,
+        fontFamily: 'PlayFair',
+        fontSize: 26,
+      ),
       elevation: 0,
     ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
@@ -39,14 +46,14 @@ class AppTheme {
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
-      // enabledBorder: border(ColorPalette.outline),
-      // disabledBorder: border(ColorPalette.greyColor),
-      // focusedBorder: border(ColorPalette.primaryColor),
-      // errorBorder: border(ColorPalette.redColor),
-      // focusedErrorBorder: border(ColorPalette.primaryColor),
-      // hintStyle: Theme.of(
-      //   context,
-      // ).textTheme.bodyLarge!.copyWith(color: ColorPalette.greyColor),
+      enabledBorder: border(ColorPalette.outline),
+      disabledBorder: border(ColorPalette.disabled),
+      focusedBorder: border(ColorPalette.primary),
+      errorBorder: border(ColorPalette.error),
+      focusedErrorBorder: border(ColorPalette.primary),
+      hintStyle: Theme.of(
+        context,
+      ).textTheme.bodyLarge!.copyWith(color: ColorPalette.hintColor),
     ),
   );
 
@@ -66,9 +73,16 @@ class AppTheme {
       onError: ColorPalette.onErrorDark,
       outline: ColorPalette.outlineDark,
     ),
+    textTheme: interTextTheme,
     // scaffoldBackgroundColor: ColorPalette.backgroundColor,
-    appBarTheme: const AppBarTheme(
-      // backgroundColor: ColorPalette.backgroundColor,
+    appBarTheme: AppBarTheme(
+      backgroundColor: Theme.of(context).primaryColor,
+      foregroundColor: Theme.of(context).colorScheme.onPrimary,
+      titleTextStyle: Theme.of(context).textTheme.headlineMedium?.copyWith(
+        color: Theme.of(context).colorScheme.onPrimary,
+        fontFamily: 'PlayFair',
+        fontSize: 26,
+      ),
       elevation: 0,
     ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
@@ -78,14 +92,14 @@ class AppTheme {
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
-      // enabledBorder: border(ColorPalette.outline),
-      // disabledBorder: border(ColorPalette.greyColor),
-      // focusedBorder: border(ColorPalette.primaryColor),
-      // errorBorder: border(ColorPalette.redColor),
-      // focusedErrorBorder: border(ColorPalette.primaryColor),
-      // hintStyle: Theme.of(
-      //   context,
-      // ).textTheme.bodyLarge!.copyWith(color: ColorPalette.greyColor),
+      enabledBorder: border(ColorPalette.outline),
+      disabledBorder: border(ColorPalette.disabled),
+      focusedBorder: border(ColorPalette.primary),
+      errorBorder: border(ColorPalette.error),
+      focusedErrorBorder: border(ColorPalette.primary),
+      hintStyle: Theme.of(
+        context,
+      ).textTheme.bodyLarge!.copyWith(color: ColorPalette.hintColor),
     ),
   );
 }

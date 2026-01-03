@@ -2,9 +2,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:question_hub/core/database/app_database.dart';
 import 'package:question_hub/core/response/result.dart';
 import 'package:question_hub/features/bookmark/domain/repository/bookmark_repository.dart';
-import 'package:question_hub/features/home/data/models/question_model.dart';
 import 'package:question_hub/services/local/question_local_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
+import '../../../../models/question_model.dart';
 
 final bookmarkRepositoryProvider = Provider(
   (ref) => BookmarkRepositoryImpl(ref.watch(questionLocalServiceProvider)),

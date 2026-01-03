@@ -2,15 +2,15 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_html_table/flutter_html_table.dart';
-import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
-import 'package:flutter_math_fork/flutter_math.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gpt_markdown/gpt_markdown.dart';
 import 'package:popover/popover.dart';
+import 'package:question_hub/core/common/styles.dart';
 import 'package:question_hub/features/bookmark/presentation/providers/bookmark_provider.dart';
-import 'package:question_hub/features/home/data/models/question_model.dart';
-import 'package:question_hub/utils/ui/image_overlay.dart';
 import 'package:question_hub/utils/ui/sized_box.dart';
 
+import '../../../../core/enums/question_type.dart';
+import '../../../../models/question_model.dart';
 import '../../../questions/presentation/providers/question_provider.dart';
 
 class QuestionCard extends StatelessWidget {
@@ -32,7 +32,7 @@ class QuestionCard extends StatelessWidget {
                 Consumer(
                   builder: (context, ref, child) {
                     final isContains = ref.watch(
-                      isQuestionBookmarkedProvider(question.id!),
+                      isQuestionBookmarkedProvider(question.id),
                     );
                     return IconButton(
                       onPressed: () {
@@ -71,62 +71,46 @@ class QuestionCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (sn != null) ...[
-              Padding(
-                padding: const EdgeInsets.only(top: 2),
-                child: Text(
+              if (question.content.first.type != QuestionType.markdown) ...[
+                Text(
                   sn.toString(),
-                  style: Theme.of(context).textTheme.titleSmall,
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w700),
                 ),
-              ),
-              8.widthBox,
+                8.widthBox,
+              ],
             ],
 
             Expanded(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ...formatQuestion(context, question.question!),
-                  if (question.table != null) ...[
-                    SingleChildScrollView(
+                children: question.content.map((content) {
+                  final isFirst = question.content.first == content;
+                  if (content.type == QuestionType.markdown) {
+                    return GptMarkdown(
+                      (isFirst ? '**$sn.**  ' : '') + content.data['markdown'],
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    );
+                  } else if (content.type == QuestionType.html) {
+                    return SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Html(
-                        data: question.table,
+                        data: content.data['html'],
                         shrinkWrap: true,
-                        style: {
-                          "table": Style(
-                            // border: Border.all(color: Colors.black),
-                          ),
-                          "th": Style(
-                            backgroundColor: Colors.grey[300],
-                            border: Border.all(color: Colors.black, width: 0.1),
-                            textAlign: TextAlign.center,
-                            padding: HtmlPaddings.all(4),
-                          ),
-                          "td": Style(
-                            border: Border.all(color: Colors.black, width: 0.1),
-                            textAlign: TextAlign.center,
-                            padding: HtmlPaddings.all(4),
-                          ),
-                          "body": Style(
-                            fontFamily: 'Lora',
-                            fontSize: FontSize(16),
-                          ),
-                          "code": Style(fontFamily: 'JetBrainsMono'),
-                        },
+                        style: htmlStyle(true),
                         extensions: [TableHtmlExtension()],
                       ),
-                    ),
-                  ],
-
-                  if (question.image != null) ...[
-                    ImageOverlay(imageUrl: question.image!),
-                  ],
-
-                  if (question.trailing != null) ...[
-                    ...formatQuestion(context, question.trailing!),
-                  ],
-                ],
+                    );
+                  } else if (content.type == QuestionType.image) {
+                    return Image.network(
+                      content.data['image'],
+                      fit: BoxFit.fill,
+                    );
+                  }
+                  return SizedBox();
+                }).toList(),
               ),
             ),
           ],
@@ -135,68 +119,68 @@ class QuestionCard extends StatelessWidget {
     );
   }
 
-  List<Widget> formatQuestion(BuildContext context, String text) {
-    final markDownStyle = MarkdownStyleSheet.fromTheme(Theme.of(context))
-        .copyWith(
-          p: const TextStyle(fontFamily: 'Lora', fontSize: 16, height: 1.5),
-          code: const TextStyle(
-            fontFamily: 'JetBrainsMono',
-            fontSize: 14,
-            backgroundColor: Color(0xFFF7F7F7),
-          ),
-        );
-
-    final regex = RegExp(r'(\$\$.*?\$\$)', dotAll: true);
-    final matches = regex.allMatches(text);
-
-    if (matches.isEmpty) {
-      return [MarkdownBody(data: text, styleSheet: markDownStyle)];
-    }
-
-    final widgets = <Widget>[];
-    int lastIndex = 0;
-
-    for (final match in matches) {
-      // Add Markdown before formula
-      if (match.start > lastIndex) {
-        widgets.add(
-          MarkdownBody(
-            data: text.substring(lastIndex, match.start),
-            styleSheet: markDownStyle,
-          ),
-        );
-      }
-
-      // Extract the formula inside $$...$$
-      final formula = text.substring(match.start + 2, match.end - 2).trim();
-
-      widgets.add(
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          child: Math.tex(formula, textStyle: const TextStyle(fontSize: 18)),
-        ),
-      );
-
-      lastIndex = match.end;
-    }
-
-    // Add any Markdown after the last formula
-    if (lastIndex < text.length) {
-      widgets.add(
-        MarkdownBody(
-          data: question.question!.substring(lastIndex),
-          styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
-            p: const TextStyle(fontFamily: 'Lora', fontSize: 16, height: 1.5),
-            code: const TextStyle(
-              fontFamily: 'JetBrainsMono',
-              fontSize: 14,
-              backgroundColor: Color(0xFFF7F7F7),
-            ),
-          ),
-        ),
-      );
-    }
-
-    return widgets;
-  }
+  // List<Widget> formatQuestion(BuildContext context, String text) {
+  //   final markDownStyle = MarkdownStyleSheet.fromTheme(Theme.of(context))
+  //       .copyWith(
+  //         p: const TextStyle(fontFamily: 'Lora', fontSize: 16, height: 1.5),
+  //         code: const TextStyle(
+  //           fontFamily: 'JetBrainsMono',
+  //           fontSize: 14,
+  //           backgroundColor: Color(0xFFF7F7F7),
+  //         ),
+  //       );
+  //
+  //   final regex = RegExp(r'(\$\$.*?\$\$)', dotAll: true);
+  //   final matches = regex.allMatches(text);
+  //
+  //   if (matches.isEmpty) {
+  //     return [MarkdownBody(data: text, styleSheet: markDownStyle)];
+  //   }
+  //
+  //   final widgets = <Widget>[];
+  //   int lastIndex = 0;
+  //
+  //   for (final match in matches) {
+  //     // Add Markdown before formula
+  //     if (match.start > lastIndex) {
+  //       widgets.add(
+  //         MarkdownBody(
+  //           data: text.substring(lastIndex, match.start),
+  //           styleSheet: markDownStyle,
+  //         ),
+  //       );
+  //     }
+  //
+  //     // Extract the formula inside $$...$$
+  //     final formula = text.substring(match.start + 2, match.end - 2).trim();
+  //
+  //     widgets.add(
+  //       Padding(
+  //         padding: const EdgeInsets.symmetric(vertical: 8),
+  //         child: Math.tex(formula, textStyle: const TextStyle(fontSize: 18)),
+  //       ),
+  //     );
+  //
+  //     lastIndex = match.end;
+  //   }
+  //
+  //   // Add any Markdown after the last formula
+  //   if (lastIndex < text.length) {
+  //     widgets.add(
+  //       MarkdownBody(
+  //         data: question.question!.substring(lastIndex),
+  //         styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
+  //           p: const TextStyle(fontFamily: 'Lora', fontSize: 16, height: 1.5),
+  //           code: const TextStyle(
+  //             fontFamily: 'JetBrainsMono',
+  //             fontSize: 14,
+  //             backgroundColor: Color(0xFFF7F7F7),
+  //           ),
+  //         ),
+  //       ),
+  //     );
+  //   }
+  //
+  //   return widgets;
+  // }
 }

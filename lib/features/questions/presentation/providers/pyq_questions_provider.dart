@@ -5,10 +5,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:question_hub/core/common/snackbar.dart';
 import 'package:question_hub/core/response/result_states.dart';
-import 'package:question_hub/features/home/data/models/pyq_model.dart';
-import 'package:question_hub/features/home/data/models/question_model.dart';
 import 'package:question_hub/features/questions/data/repository/question_repository_impl.dart';
 import 'package:question_hub/features/questions/domain/repository/question_repository.dart';
+
+import '../../../../models/pyq_model.dart';
+import '../../../../models/question_model.dart';
 
 // final questionsProvider = AsyncNotifierProvider.family(QuestionsProvider.new);
 final pyqQuestionProvider = AsyncNotifierProvider.family((int subjectId) {

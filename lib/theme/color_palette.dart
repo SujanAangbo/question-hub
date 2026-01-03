@@ -44,4 +44,10 @@ class ColorPalette {
   static const Color warning = Color(0xFFF59E0B);
   static const Color info = Color(0xFF0284C7);
   static const Color disabled = Color(0xFF9CA3AF);
+
+  // common:
+  static const Color white = Colors.white;
+  static const Color black = Colors.black;
+  static const Color hintColor = Color(0xFF636262);
+  static const Color grey = Colors.grey;
 }

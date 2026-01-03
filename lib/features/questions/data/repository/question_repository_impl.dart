@@ -3,12 +3,12 @@ import 'dart:developer';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:question_hub/core/database/app_database.dart';
 import 'package:question_hub/core/response/result.dart';
-import 'package:question_hub/features/home/data/models/pyq_model.dart';
-import 'package:question_hub/features/home/data/models/question_model.dart';
 import 'package:question_hub/services/local/question_local_service.dart';
 import 'package:question_hub/services/remote/question_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../../models/pyq_model.dart';
+import '../../../../models/question_model.dart';
 import '../../domain/repository/question_repository.dart';
 
 final questionRepositoryProvider = Provider(

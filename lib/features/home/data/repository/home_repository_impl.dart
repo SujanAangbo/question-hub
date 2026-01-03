@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:question_hub/core/response/result.dart';
-import 'package:question_hub/features/home/data/models/subject_model.dart';
 import 'package:question_hub/services/remote/question_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../../models/subject_model.dart';
 import '../../domain/repository/home_repository.dart';
 
 final homeRepositoryProvider = Provider(

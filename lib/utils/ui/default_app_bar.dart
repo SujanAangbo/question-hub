@@ -12,6 +12,8 @@ class DefaultAppBar extends StatefulWidget implements PreferredSizeWidget {
     this.action,
     this.centerTitle = true,
     this.hasBottomDivider = false,
+    this.bottom,
+    this.toolbarHeight,
   });
 
   final Widget? leading;
@@ -20,25 +22,21 @@ class DefaultAppBar extends StatefulWidget implements PreferredSizeWidget {
   final Widget? action;
   final bool centerTitle;
   final bool hasBottomDivider;
+  final PreferredSizeWidget? bottom;
+  final double? toolbarHeight;
 
   @override
   State<DefaultAppBar> createState() => _DefaultAppBarState();
 
   @override
-  Size get preferredSize => Size(double.infinity, kToolbarHeight);
+  Size get preferredSize =>
+      Size(double.infinity, toolbarHeight ?? kToolbarHeight);
 }
 
 class _DefaultAppBarState extends State<DefaultAppBar> {
   Widget? buildTitle() {
     if (widget.title != null) {
-      return Text(
-        widget.title!,
-        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-          fontSize: 24,
-          fontWeight: FontWeight.w600,
-          letterSpacing: 2,
-        ),
-      );
+      return Text(widget.title!);
     } else {
       return widget.titleWidget;
     }
@@ -50,6 +48,7 @@ class _DefaultAppBarState extends State<DefaultAppBar> {
       titleSpacing: 0,
       elevation: 1,
       title: buildTitle(),
+      toolbarHeight: widget.toolbarHeight,
       leading:
           widget.leading ??
           (context.router.canPop()
@@ -62,12 +61,14 @@ class _DefaultAppBarState extends State<DefaultAppBar> {
               : null),
       centerTitle: widget.centerTitle,
       actions: widget.action == null ? [] : [widget.action!],
-      bottom: widget.hasBottomDivider
-          ? PreferredSize(
-              preferredSize: Size(double.infinity, 1),
-              child: AppHorizontalDivider(),
-            )
-          : null,
+      bottom:
+          widget.bottom ??
+          (widget.hasBottomDivider
+              ? PreferredSize(
+                  preferredSize: Size(double.infinity, 1),
+                  child: AppHorizontalDivider(),
+                )
+              : null),
     );
   }
 }

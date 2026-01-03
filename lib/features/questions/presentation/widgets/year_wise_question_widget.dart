@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:question_hub/features/questions/presentation/widgets/pyq_question_card.dart';
 
-import '../../../home/data/models/pyq_model.dart';
+import '../../../../models/pyq_model.dart';
 
 class YearWiseQuestionWidgetPdf extends StatelessWidget {
   const YearWiseQuestionWidgetPdf({super.key, required this.questions});
@@ -13,8 +13,7 @@ class YearWiseQuestionWidgetPdf extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: questions.map((pyq) {
-        return PYQQuestionCard(pyq: pyq); // Replace with actual PDF-safe
-        // widget
+        return PYQQuestionCard(pyq: pyq);
       }).toList(),
     );
   }

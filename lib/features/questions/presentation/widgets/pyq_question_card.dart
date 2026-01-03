@@ -2,15 +2,17 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_html_table/flutter_html_table.dart';
-import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
-import 'package:flutter_math_fork/flutter_math.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gpt_markdown/gpt_markdown.dart';
 import 'package:popover/popover.dart';
+import 'package:question_hub/core/common/snackbar.dart';
+import 'package:question_hub/core/common/styles.dart';
+import 'package:question_hub/core/enums/question_type.dart';
 import 'package:question_hub/features/bookmark/presentation/providers/bookmark_provider.dart';
-import 'package:question_hub/features/home/data/models/pyq_model.dart';
-import 'package:question_hub/utils/ui/sized_box.dart';
+import 'package:question_hub/features/bookmark/presentation/providers/doubt_provider.dart';
 
-import '../../../../utils/ui/image_overlay.dart';
+import '../../../../models/pyq_model.dart';
+import '../../../../utils/ui/sized_box.dart';
 import '../providers/question_provider.dart';
 
 class PYQQuestionCard extends StatelessWidget {
@@ -31,18 +33,18 @@ class PYQQuestionCard extends StatelessWidget {
                 Consumer(
                   builder: (context, ref, child) {
                     final isContains = ref.watch(
-                      isQuestionBookmarkedProvider(pyq.questions.id!),
+                      isQuestionBookmarkedProvider(pyq.question.id),
                     );
                     return IconButton(
                       onPressed: () {
                         if (isContains) {
                           ref
                               .read(questionProvider.notifier)
-                              .removeBookmark(context, pyq.questions);
+                              .removeBookmark(context, pyq.question);
                         } else {
                           ref
                               .read(questionProvider.notifier)
-                              .addToBookmark(context, pyq.questions);
+                              .addToBookmark(context, pyq.question);
                         }
                         context.router.pop();
                       },
@@ -54,9 +56,31 @@ class PYQQuestionCard extends StatelessWidget {
                     );
                   },
                 ),
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.favorite_outline),
+                Consumer(
+                  builder: (context, ref, child) {
+                    final isContains = ref.watch(
+                      isQuestionDoubtedProvider(pyq.question.id),
+                    );
+                    return IconButton(
+                      onPressed: () {
+                        if (isContains) {
+                          showSnackBar(
+                            context: context,
+                            message: "Question is already in doubt list",
+                            status: SnackBarStatus.error,
+                          );
+                          return;
+                        }
+                        ref
+                            .read(doubtProvider.notifier)
+                            .addDoubt(context, pyq.question);
+                      },
+                      icon: Icon(
+                        Icons.question_mark,
+                        color: isContains ? Colors.green : null,
+                      ),
+                    );
+                  },
                 ),
                 IconButton(onPressed: () {}, icon: Icon(Icons.person)),
               ],
@@ -65,148 +89,56 @@ class PYQQuestionCard extends StatelessWidget {
         );
       },
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(8),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 2),
-              child: Text(
+            if (pyq.question.content.first.type != QuestionType.markdown) ...[
+              Text(
                 pyq.sn.toString(),
-                style: Theme.of(context).textTheme.titleSmall,
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w700),
               ),
-            ),
-            8.widthBox,
+              8.widthBox,
+            ],
+
             Expanded(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Text(
-                  //   pyq.questions.question ?? '',
-                  //   style: TextStyle(color: Colors.black),
-                  // ),
-                  // Html(
-                  //   data: pyq.questions.question,
-                  //   style: {'mn': Style(color: Colors.red)},
-                  // ),
-                  ...formatQuestion(context, pyq.questions.question!),
-
-                  if (pyq.questions.table != null) ...[
-                    SingleChildScrollView(
+                children: pyq.question.content.map((content) {
+                  final isFirst = pyq.question.content.first == content;
+                  if (content.type == QuestionType.markdown) {
+                    return GptMarkdown(
+                      (isFirst ? '**${pyq.sn}.**  ' : '') +
+                          content.data['markdown'],
+                      style: Theme.of(context).textTheme.bodyMedium,
+                      textAlign: TextAlign.justify,
+                    );
+                  } else if (content.type == QuestionType.html) {
+                    return SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Html(
-                        data: pyq.questions.table,
+                        data: content.data['html'],
                         shrinkWrap: true,
-
-                        style: {
-                          "table": Style(
-                            border: Border.all(color: Colors.black),
-                          ),
-                          "th": Style(
-                            backgroundColor: Colors.grey[300],
-                            border: Border.all(color: Colors.black, width: 0.1),
-                            textAlign: TextAlign.center,
-                            padding: HtmlPaddings.all(4),
-                          ),
-                          "td": Style(
-                            border: Border.all(color: Colors.black, width: 0.1),
-                            textAlign: TextAlign.center,
-                            padding: HtmlPaddings.all(4),
-                            color: Colors.black,
-                          ),
-                          "body": Style(
-                            fontFamily: 'Lora',
-                            fontSize: FontSize(16),
-                            color: Colors.black,
-                          ),
-                          "code": Style(
-                            fontFamily: 'JetBrainsMono',
-                            color: Colors.black,
-                          ),
-                        },
+                        style: htmlStyle(false),
                         extensions: [TableHtmlExtension()],
                       ),
-                    ),
-                  ],
-
-                  if (pyq.questions.image != null) ...[
-                    ImageOverlay(imageUrl: pyq.questions.image!),
-                  ],
-                  if (pyq.questions.trailing != null) ...[
-                    ...formatQuestion(context, pyq.questions.trailing!),
-                  ],
-                ],
+                    );
+                  } else if (content.type == QuestionType.image) {
+                    return Image.network(
+                      content.data['image'],
+                      fit: BoxFit.fill,
+                    );
+                  }
+                  return SizedBox();
+                }).toList(),
               ),
             ),
           ],
         ),
       ),
     );
-  }
-
-  List<Widget> formatQuestion(BuildContext context, String text) {
-    final markDownStyle = MarkdownStyleSheet.fromTheme(Theme.of(context))
-        .copyWith(
-          p: const TextStyle(fontFamily: 'Lora', fontSize: 16, height: 1.5),
-          code: const TextStyle(
-            fontFamily: 'JetBrainsMono',
-            fontSize: 14,
-            backgroundColor: Color(0xFFF7F7F7),
-          ),
-        );
-
-    final regex = RegExp(r'(\$\$.*?\$\$)', dotAll: true);
-    final matches = regex.allMatches(text);
-
-    if (matches.isEmpty) {
-      return [MarkdownBody(data: text, styleSheet: markDownStyle)];
-    }
-
-    final widgets = <Widget>[];
-    int lastIndex = 0;
-
-    for (final match in matches) {
-      // Add Markdown before formula
-      if (match.start > lastIndex) {
-        widgets.add(
-          MarkdownBody(
-            data: text.substring(lastIndex, match.start),
-            styleSheet: markDownStyle,
-          ),
-        );
-      }
-
-      // Extract the formula inside $$...$$
-      final formula = text.substring(match.start + 2, match.end - 2).trim();
-
-      widgets.add(
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          child: Math.tex(formula, textStyle: const TextStyle(fontSize: 18)),
-        ),
-      );
-
-      lastIndex = match.end;
-    }
-
-    // Add any Markdown after the last formula
-    if (lastIndex < text.length) {
-      widgets.add(
-        MarkdownBody(
-          data: pyq.questions.question!.substring(lastIndex),
-          styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
-            p: const TextStyle(fontFamily: 'Lora', fontSize: 16, height: 1.5),
-            code: const TextStyle(
-              fontFamily: 'JetBrainsMono',
-              fontSize: 14,
-              backgroundColor: Color(0xFFF7F7F7),
-            ),
-          ),
-        ),
-      );
-    }
-
-    return widgets;
   }
 }

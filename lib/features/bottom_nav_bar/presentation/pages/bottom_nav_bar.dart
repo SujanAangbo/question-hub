@@ -10,6 +10,11 @@ class BottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AutoTabsScaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          context.router.push(DemoUi());
+        },
+      ),
       routes: [HomeRoute(), BookmarkRoute(), SettingsRoute()],
       bottomNavigationBuilder: (context, router) => Column(
         mainAxisSize: MainAxisSize.min,
@@ -21,8 +26,8 @@ class BottomNavBar extends StatelessWidget {
             items: [
               BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
               BottomNavigationBarItem(
-                icon: Icon(Icons.bookmark_outline),
-                label: "Bookmark",
+                icon: Icon(Icons.book_outlined),
+                label: "Library",
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.settings),

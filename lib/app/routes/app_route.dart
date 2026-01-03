@@ -7,7 +7,7 @@ class AppRouter extends RootStackRouter {
   List<AutoRoute> get routes => [
     AutoRoute(
       page: BottomNavBar.page,
-      initial: true,
+      // initial: true,
       path: '/bottom_nav',
       children: [
         AutoRoute(page: HomeRoute.page, path: "home"),
@@ -16,5 +16,10 @@ class AppRouter extends RootStackRouter {
       ],
     ),
     AutoRoute(page: QuestionsRoute.page, path: '/questions'),
+    AutoRoute(page: DemoUi.page, path: '/demo'),
+    AutoRoute(page: OnboardingRoute.page, path: '/onboarding'),
+    AutoRoute(page: NoInternetRoute.page, path: '/no_internet'),
+    AutoRoute(page: BookmarkRoute.page, path: '/bookmark'),
+    AutoRoute(page: SplashRoute.page, path: '/splash', initial: true),
   ];
 }
