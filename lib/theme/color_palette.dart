@@ -4,8 +4,8 @@ class ColorPalette {
   ColorPalette._();
 
   /// light theme color
-  static const Color primary = Color(0xFF4B5C92);
-  static const Color onPrimary = Color(0xFFFFFFFF);
+  static const Color onPrimary = Color(0xFFB4C5FF);
+  static const Color primary = Color(0xFF1A2D60);
 
   static const Color secondary = Color(0xFF595E72);
   static const Color onSecondary = Color(0xFFFFFFFF);
@@ -22,8 +22,8 @@ class ColorPalette {
   static const Color outline = Color(0xFF757680);
 
   /// dark theme colors
-  static const Color primaryDark = Color(0xFFB4C5FF);
-  static const Color onPrimaryDark = Color(0xFF1A2D60);
+  static const Color primaryDark = Color(0xFF000000);
+  static const Color onPrimaryDark = Color(0xFFFFFFFF);
 
   static const Color secondaryDark = Color(0xFFC1C5DD);
   static const Color onSecondaryDark = Color(0xFF2B3042);

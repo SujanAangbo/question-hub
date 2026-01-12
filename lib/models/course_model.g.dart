@@ -14,6 +14,7 @@ _CourseModel _$CourseModelFromJson(Map<String, dynamic> json) => _CourseModel(
   years: (json['years'] as num).toInt(),
   ch: (json['ch'] as num?)?.toInt(),
   code: json['code'] as String?,
+  isBatch: json['is_batch'] as bool? ?? false,
   createdAt: json['created_at'] as String?,
   updatedAt: json['updated_at'] as String?,
 );
@@ -27,6 +28,7 @@ Map<String, dynamic> _$CourseModelToJson(_CourseModel instance) =>
       'years': instance.years,
       'ch': instance.ch,
       'code': instance.code,
+      'is_batch': instance.isBatch,
       'created_at': instance.createdAt,
       'updated_at': instance.updatedAt,
     };

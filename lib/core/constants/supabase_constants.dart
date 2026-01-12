@@ -10,6 +10,7 @@ class SupabaseConstants {
   static String pyqTable = 'pyq';
   static String questionsTable = 'question';
   static String subjectsTable = 'subjects';
+  static String pyqReportTable = 'pyq_report';
 
   // buckets
   static String storagePath =

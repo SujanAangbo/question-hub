@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CourseModel {
 
- int get id; String get name; String? get description; CourseType get type; int get years; int? get ch; String? get code; String? get createdAt; String? get updatedAt;
+ int get id; String get name; String? get description; CourseType get type; int get years; int? get ch; String? get code; bool get isBatch; String? get createdAt; String? get updatedAt;
 /// Create a copy of CourseModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $CourseModelCopyWith<CourseModel> get copyWith => _$CourseModelCopyWithImpl<Cour
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CourseModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.type, type) || other.type == type)&&(identical(other.years, years) || other.years == years)&&(identical(other.ch, ch) || other.ch == ch)&&(identical(other.code, code) || other.code == code)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CourseModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.type, type) || other.type == type)&&(identical(other.years, years) || other.years == years)&&(identical(other.ch, ch) || other.ch == ch)&&(identical(other.code, code) || other.code == code)&&(identical(other.isBatch, isBatch) || other.isBatch == isBatch)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,description,type,years,ch,code,createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,id,name,description,type,years,ch,code,isBatch,createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'CourseModel(id: $id, name: $name, description: $description, type: $type, years: $years, ch: $ch, code: $code, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'CourseModel(id: $id, name: $name, description: $description, type: $type, years: $years, ch: $ch, code: $code, isBatch: $isBatch, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $CourseModelCopyWith<$Res>  {
   factory $CourseModelCopyWith(CourseModel value, $Res Function(CourseModel) _then) = _$CourseModelCopyWithImpl;
 @useResult
 $Res call({
- int id, String name, String? description, CourseType type, int years, int? ch, String? code, String? createdAt, String? updatedAt
+ int id, String name, String? description, CourseType type, int years, int? ch, String? code, bool isBatch, String? createdAt, String? updatedAt
 });
 
 
@@ -65,7 +65,7 @@ class _$CourseModelCopyWithImpl<$Res>
 
 /// Create a copy of CourseModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? description = freezed,Object? type = null,Object? years = null,Object? ch = freezed,Object? code = freezed,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? description = freezed,Object? type = null,Object? years = null,Object? ch = freezed,Object? code = freezed,Object? isBatch = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -74,7 +74,8 @@ as String?,type: null == type ? _self.type : type // ignore: cast_nullable_to_no
 as CourseType,years: null == years ? _self.years : years // ignore: cast_nullable_to_non_nullable
 as int,ch: freezed == ch ? _self.ch : ch // ignore: cast_nullable_to_non_nullable
 as int?,code: freezed == code ? _self.code : code // ignore: cast_nullable_to_non_nullable
-as String?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as String?,isBatch: null == isBatch ? _self.isBatch : isBatch // ignore: cast_nullable_to_non_nullable
+as bool,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as String?,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
@@ -161,10 +162,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String name,  String? description,  CourseType type,  int years,  int? ch,  String? code,  String? createdAt,  String? updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String name,  String? description,  CourseType type,  int years,  int? ch,  String? code,  bool isBatch,  String? createdAt,  String? updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CourseModel() when $default != null:
-return $default(_that.id,_that.name,_that.description,_that.type,_that.years,_that.ch,_that.code,_that.createdAt,_that.updatedAt);case _:
+return $default(_that.id,_that.name,_that.description,_that.type,_that.years,_that.ch,_that.code,_that.isBatch,_that.createdAt,_that.updatedAt);case _:
   return orElse();
 
 }
@@ -182,10 +183,10 @@ return $default(_that.id,_that.name,_that.description,_that.type,_that.years,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String name,  String? description,  CourseType type,  int years,  int? ch,  String? code,  String? createdAt,  String? updatedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String name,  String? description,  CourseType type,  int years,  int? ch,  String? code,  bool isBatch,  String? createdAt,  String? updatedAt)  $default,) {final _that = this;
 switch (_that) {
 case _CourseModel():
-return $default(_that.id,_that.name,_that.description,_that.type,_that.years,_that.ch,_that.code,_that.createdAt,_that.updatedAt);case _:
+return $default(_that.id,_that.name,_that.description,_that.type,_that.years,_that.ch,_that.code,_that.isBatch,_that.createdAt,_that.updatedAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -202,10 +203,10 @@ return $default(_that.id,_that.name,_that.description,_that.type,_that.years,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String name,  String? description,  CourseType type,  int years,  int? ch,  String? code,  String? createdAt,  String? updatedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String name,  String? description,  CourseType type,  int years,  int? ch,  String? code,  bool isBatch,  String? createdAt,  String? updatedAt)?  $default,) {final _that = this;
 switch (_that) {
 case _CourseModel() when $default != null:
-return $default(_that.id,_that.name,_that.description,_that.type,_that.years,_that.ch,_that.code,_that.createdAt,_that.updatedAt);case _:
+return $default(_that.id,_that.name,_that.description,_that.type,_that.years,_that.ch,_that.code,_that.isBatch,_that.createdAt,_that.updatedAt);case _:
   return null;
 
 }
@@ -217,7 +218,7 @@ return $default(_that.id,_that.name,_that.description,_that.type,_that.years,_th
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class _CourseModel implements CourseModel {
-  const _CourseModel({required this.id, required this.name, this.description, required this.type, required this.years, this.ch, this.code, this.createdAt, this.updatedAt});
+  const _CourseModel({required this.id, required this.name, this.description, required this.type, required this.years, this.ch, this.code, this.isBatch = false, this.createdAt, this.updatedAt});
   factory _CourseModel.fromJson(Map<String, dynamic> json) => _$CourseModelFromJson(json);
 
 @override final  int id;
@@ -227,6 +228,7 @@ class _CourseModel implements CourseModel {
 @override final  int years;
 @override final  int? ch;
 @override final  String? code;
+@override@JsonKey() final  bool isBatch;
 @override final  String? createdAt;
 @override final  String? updatedAt;
 
@@ -243,16 +245,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CourseModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.type, type) || other.type == type)&&(identical(other.years, years) || other.years == years)&&(identical(other.ch, ch) || other.ch == ch)&&(identical(other.code, code) || other.code == code)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CourseModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.type, type) || other.type == type)&&(identical(other.years, years) || other.years == years)&&(identical(other.ch, ch) || other.ch == ch)&&(identical(other.code, code) || other.code == code)&&(identical(other.isBatch, isBatch) || other.isBatch == isBatch)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,description,type,years,ch,code,createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,id,name,description,type,years,ch,code,isBatch,createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'CourseModel(id: $id, name: $name, description: $description, type: $type, years: $years, ch: $ch, code: $code, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'CourseModel(id: $id, name: $name, description: $description, type: $type, years: $years, ch: $ch, code: $code, isBatch: $isBatch, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -263,7 +265,7 @@ abstract mixin class _$CourseModelCopyWith<$Res> implements $CourseModelCopyWith
   factory _$CourseModelCopyWith(_CourseModel value, $Res Function(_CourseModel) _then) = __$CourseModelCopyWithImpl;
 @override @useResult
 $Res call({
- int id, String name, String? description, CourseType type, int years, int? ch, String? code, String? createdAt, String? updatedAt
+ int id, String name, String? description, CourseType type, int years, int? ch, String? code, bool isBatch, String? createdAt, String? updatedAt
 });
 
 
@@ -280,7 +282,7 @@ class __$CourseModelCopyWithImpl<$Res>
 
 /// Create a copy of CourseModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? description = freezed,Object? type = null,Object? years = null,Object? ch = freezed,Object? code = freezed,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? description = freezed,Object? type = null,Object? years = null,Object? ch = freezed,Object? code = freezed,Object? isBatch = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
   return _then(_CourseModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -289,7 +291,8 @@ as String?,type: null == type ? _self.type : type // ignore: cast_nullable_to_no
 as CourseType,years: null == years ? _self.years : years // ignore: cast_nullable_to_non_nullable
 as int,ch: freezed == ch ? _self.ch : ch // ignore: cast_nullable_to_non_nullable
 as int?,code: freezed == code ? _self.code : code // ignore: cast_nullable_to_non_nullable
-as String?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as String?,isBatch: null == isBatch ? _self.isBatch : isBatch // ignore: cast_nullable_to_non_nullable
+as bool,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as String?,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as String?,
   ));

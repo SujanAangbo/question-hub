@@ -7,8 +7,10 @@ import 'package:question_hub/core/common/snackbar.dart';
 import 'package:question_hub/core/response/result_states.dart';
 import 'package:question_hub/features/questions/data/repository/question_repository_impl.dart';
 import 'package:question_hub/features/questions/domain/repository/question_repository.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../../../models/pyq_model.dart';
+import '../../../../models/pyq_report_model.dart';
 import '../../../../models/question_model.dart';
 
 // final questionsProvider = AsyncNotifierProvider.family(QuestionsProvider.new);
@@ -16,19 +18,15 @@ final pyqQuestionProvider = AsyncNotifierProvider.family((int subjectId) {
   return PYQQuestionsProvider(subjectId);
 });
 
-class PYQQuestionsProvider extends AsyncNotifier<Map<int, List<PyqModel>>> {
+class PYQQuestionsProvider extends AsyncNotifier<Map<String, List<PyqModel>>> {
   late QuestionRepository _questionRepository;
 
-  PYQQuestionsProvider(this.subjectId) {
-    print("inside constructor");
-  }
+  PYQQuestionsProvider(this.subjectId);
 
   int subjectId;
 
   @override
-  Future<Map<int, List<PyqModel>>> build() async {
-    print("over here");
-
+  Future<Map<String, List<PyqModel>>> build() async {
     _questionRepository = ref.watch(questionRepositoryProvider);
 
     final questions = await getQuestions(subjectId);
@@ -41,8 +39,6 @@ class PYQQuestionsProvider extends AsyncNotifier<Map<int, List<PyqModel>>> {
   Future<List<PyqModel>> getQuestions(int subjectId) async {
     final data = await _questionRepository.getSubjectQuestions(subjectId);
 
-    print("result: $data");
-
     if (data is Success) {
       return data.data!;
     }
@@ -50,16 +46,31 @@ class PYQQuestionsProvider extends AsyncNotifier<Map<int, List<PyqModel>>> {
     return Future.error(data.error ?? 'Unable to fetch questions');
   }
 
-  Map<int, List<PyqModel>> formatQuestionBasedOnYear(List<PyqModel> questions) {
-    Map<int, List<PyqModel>> questionMappedWithYear = {};
+  Map<String, List<PyqModel>> formatQuestionBasedOnYear(
+    List<PyqModel> questions,
+  ) {
+    Map<String, List<PyqModel>> questionMappedWithYear = {};
 
     for (int i = 0; i < questions.length; i++) {
       final question = questions[i];
 
-      if (questionMappedWithYear.containsKey(question.year)) {
-        questionMappedWithYear[question.year]!.add(question);
+      // first check batch and group with it. if there is no batch then group
+      // with year.
+      if (question.batch != null) {
+        final key = 'Batch: ${question.batch} (${question.year})';
+        if (questionMappedWithYear.containsKey(key)) {
+          questionMappedWithYear[key]!.add(question);
+        } else {
+          questionMappedWithYear.putIfAbsent(key, () => [question]);
+        }
+        continue;
+      }
+
+      final key = 'Year: ${question.year}';
+      if (questionMappedWithYear.containsKey(key)) {
+        questionMappedWithYear[key]!.add(question);
       } else {
-        questionMappedWithYear.putIfAbsent(question.year, () => [question]);
+        questionMappedWithYear.putIfAbsent(key, () => [question]);
       }
     }
 
@@ -105,6 +116,74 @@ class PYQQuestionsProvider extends AsyncNotifier<Map<int, List<PyqModel>>> {
       showSnackBar(
         context: context,
         message: "Unable to remove bookmark!",
+        status: SnackBarStatus.error,
+      );
+    }
+  }
+
+  Future<void> reportQuestion({
+    required PyqModel question,
+    required String message,
+    required BuildContext context,
+  }) async {
+    print("here inside report");
+    final reportData = PyqReportModel(
+      id: Uuid().v4(),
+      course: question.course,
+      subject: question.subject,
+      message: message,
+      year: question.year,
+      batch: question.batch,
+      sn: question.sn,
+    );
+    final response = await _questionRepository.reportQuestion(reportData);
+
+    print("report response $response");
+    if (response.isSuccess) {
+      showSnackBar(
+        context: context,
+        message: "Reported question!",
+        status: SnackBarStatus.success,
+      );
+    } else {
+      log(response.error ?? '');
+      showSnackBar(
+        context: context,
+        message: "Unable to report question!",
+        status: SnackBarStatus.error,
+      );
+    }
+  }
+
+  Future<void> reportBatchYearQuestion({
+    required int courseId,
+    required int subjectId,
+    required String message,
+    required int? batch,
+    required int year,
+    required BuildContext context,
+  }) async {
+    final reportData = PyqReportModel(
+      id: Uuid().v4(),
+      course: courseId,
+      subject: subjectId,
+      message: message,
+      year: year,
+      batch: batch,
+    );
+    final response = await _questionRepository.reportQuestion(reportData);
+
+    if (response.isSuccess) {
+      showSnackBar(
+        context: context,
+        message: "Reported ${batch ?? year} question!",
+        status: SnackBarStatus.success,
+      );
+    } else {
+      log(response.error ?? '');
+      showSnackBar(
+        context: context,
+        message: "Unable to report question!",
         status: SnackBarStatus.error,
       );
     }

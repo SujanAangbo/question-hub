@@ -4,6 +4,7 @@ class AppAssets {
   AppAssets._();
 
   static const String _svgsPath = 'assets/svgs';
+  static const String _imgPath = 'assets/images';
   static final String _networkPath = SupabaseConstants.storagePath;
   static const String twitterLogo = '$_svgsPath/twitter_logo.svg';
   static const String homeFilledIcon = '$_svgsPath/home_filled.svg';
@@ -23,4 +24,6 @@ class AppAssets {
   static const String verifiedIcon = '$_svgsPath/verified.svg';
   static const String profileAssets = '$_svgsPath/profile.svg';
   static final String profileNetwork = '${_networkPath}/common/profile.png';
+
+  static final String logoImage = '${_imgPath}/logo.png';
 }

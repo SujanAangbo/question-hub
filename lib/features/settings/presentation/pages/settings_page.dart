@@ -17,6 +17,7 @@ class SettingsPage extends StatelessWidget {
     return FocusScaffold(
       appBar: DefaultAppBar(title: "Settings"),
       body: Container(
+        padding: EdgeInsets.all(16),
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child: Column(
@@ -27,20 +28,28 @@ class SettingsPage extends StatelessWidget {
             Row(
               mainAxisSize: MainAxisSize.max,
               children: [
-                Text("My Course"),
+                Text(
+                  "My Course",
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
                 16.widthBox,
                 Expanded(
                   child: Consumer(
                     builder: (context, ref, child) {
                       final provider = ref.watch(courseProvider);
-                      print("course data: $provider");
                       return DropdownButton<CourseModel>(
                         value: provider.value?.selectedCourse,
+                        isExpanded: true,
                         items: provider.value?.courses
                             .map(
                               (course) => DropdownMenuItem(
                                 value: course,
-                                child: Text(course.name),
+                                child: Text(
+                                  course.name,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: Theme.of(context).textTheme.bodyLarge,
+                                ),
                               ),
                             )
                             .toList(),
@@ -63,7 +72,10 @@ class SettingsPage extends StatelessWidget {
             Row(
               mainAxisSize: MainAxisSize.max,
               children: [
-                Text("Dark Mode"),
+                Text(
+                  "Dark Mode",
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
                 16.widthBox,
                 Consumer(
                   builder: (context, ref, child) {

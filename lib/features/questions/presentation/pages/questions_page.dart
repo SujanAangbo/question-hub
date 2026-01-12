@@ -15,7 +15,7 @@ class QuestionsPage extends ConsumerWidget {
   QuestionsPage({super.key, required this.subject});
 
   final SubjectModel subject;
-  late Map<int, List<PyqModel>>? questionData;
+  late Map<String, List<PyqModel>>? questionData;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -58,19 +58,10 @@ class QuestionsPage extends ConsumerWidget {
                           color: ColorPalette.info,
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        child: RichText(
-                          text: TextSpan(
-                            text: 'Year: ',
-                            style: Theme.of(context).textTheme.headlineSmall
-                                ?.copyWith(fontFamily: "PlayFair"),
-                            children: [
-                              TextSpan(
-                                text: key.toString(),
-                                style: Theme.of(context).textTheme.headlineSmall
-                                    ?.copyWith(fontFamily: "Inter"),
-                              ),
-                            ],
-                          ),
+                        child: Text(
+                          key,
+                          style: Theme.of(context).textTheme.headlineSmall
+                              ?.copyWith(fontFamily: "Inter"),
                           textAlign: TextAlign.center,
                         ),
                       ),

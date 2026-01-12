@@ -15,7 +15,6 @@ class HomeProvider extends AsyncNotifier<Map<int, List<SubjectModel>>> {
 
   @override
   Future<Map<int, List<SubjectModel>>> build() async {
-    print("over here");
     _homeRepository = ref.watch(homeRepositoryProvider);
     final courseData = ref.watch(courseProvider);
     final subjects = await getCourseSubjects(
@@ -34,7 +33,7 @@ class HomeProvider extends AsyncNotifier<Map<int, List<SubjectModel>>> {
       return data.data!;
     }
 
-    return Future.error(data.error ?? 'Unable to fetch questions');
+    return Future.error(data.error ?? 'Unable to fetch subjects');
   }
 
   Map<int, List<SubjectModel>> formatSubjectBasedOnSemester(

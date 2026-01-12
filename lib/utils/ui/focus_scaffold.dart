@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class FocusScaffold extends StatelessWidget {
   const FocusScaffold({
@@ -57,35 +58,54 @@ class FocusScaffold extends StatelessWidget {
   final String? restorationId;
 
   @override
-  Widget build(final BuildContext context) => GestureDetector(
-    onTap: () {
-      FocusScope.of(context).unfocus();
-    },
-    child: Scaffold(
-      appBar: appBar,
-      body: FocusTraversalGroup(child: body),
-      floatingActionButton: floatingActionButton,
-      floatingActionButtonLocation: floatingActionButtonLocation,
-      floatingActionButtonAnimator: floatingActionButtonAnimator,
-      persistentFooterButtons: persistentFooterButtons,
-      persistentFooterAlignment: persistentFooterAlignment,
-      drawer: drawer,
-      onDrawerChanged: onDrawerChanged,
-      endDrawer: endDrawer,
-      onEndDrawerChanged: onEndDrawerChanged,
-      bottomNavigationBar: bottomNavigationBar,
-      bottomSheet: bottomSheet,
-      backgroundColor: backgroundColor,
-      resizeToAvoidBottomInset: resizeToAvoidBottomInset,
-      primary: primary,
-      drawerDragStartBehavior: drawerDragStartBehavior,
-      extendBody: extendBody,
-      extendBodyBehindAppBar: extendBodyBehindAppBar,
-      drawerScrimColor: drawerScrimColor,
-      drawerEdgeDragWidth: drawerEdgeDragWidth,
-      drawerEnableOpenDragGesture: drawerEnableOpenDragGesture,
-      endDrawerEnableOpenDragGesture: endDrawerEnableOpenDragGesture,
-      restorationId: restorationId,
-    ),
-  );
+  Widget build(final BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: Theme.of(context).primaryColor,
+        statusBarIconBrightness: Brightness.light,
+        // statusBarIconBrightness: iconBrightness, // Android
+        // statusBarBrightness:
+        // iconBrightness == Brightness.dark
+        //     ? Brightness.light
+        //     : Brightness.dark, // iOS
+      ),
+    );
+
+    return Container(
+      color: Theme.of(context).primaryColor,
+      child: SafeArea(
+        child: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: Scaffold(
+            appBar: appBar,
+            body: FocusTraversalGroup(child: body),
+            floatingActionButton: floatingActionButton,
+            floatingActionButtonLocation: floatingActionButtonLocation,
+            floatingActionButtonAnimator: floatingActionButtonAnimator,
+            persistentFooterButtons: persistentFooterButtons,
+            persistentFooterAlignment: persistentFooterAlignment,
+            drawer: drawer,
+            onDrawerChanged: onDrawerChanged,
+            endDrawer: endDrawer,
+            onEndDrawerChanged: onEndDrawerChanged,
+            bottomNavigationBar: bottomNavigationBar,
+            bottomSheet: bottomSheet,
+            backgroundColor: backgroundColor,
+            resizeToAvoidBottomInset: resizeToAvoidBottomInset,
+            primary: primary,
+            drawerDragStartBehavior: drawerDragStartBehavior,
+            extendBody: extendBody,
+            extendBodyBehindAppBar: extendBodyBehindAppBar,
+            drawerScrimColor: drawerScrimColor,
+            drawerEdgeDragWidth: drawerEdgeDragWidth,
+            drawerEnableOpenDragGesture: drawerEnableOpenDragGesture,
+            endDrawerEnableOpenDragGesture: endDrawerEnableOpenDragGesture,
+            restorationId: restorationId,
+          ),
+        ),
+      ),
+    );
+  }
 }

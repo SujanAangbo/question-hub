@@ -15,6 +15,7 @@ abstract class CourseModel with _$CourseModel {
     required int years,
     int? ch,
     String? code,
+    @Default(false) bool isBatch,
     String? createdAt,
     String? updatedAt,
   }) = _CourseModel;

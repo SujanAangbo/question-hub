@@ -23,11 +23,11 @@ final TextTheme interTextTheme = TextTheme(
   headlineLarge: TextStyle(
     fontFamily: 'PlayFair',
     fontSize: 24,
-    // inherit: true,
+    inherit: true,
     fontWeight: FontWeight.bold,
   ),
   headlineMedium: TextStyle(
-    // inherit: true,
+    inherit: true,
     fontFamily: 'PlayFair',
     fontSize: 22,
     fontWeight: FontWeight.w600,

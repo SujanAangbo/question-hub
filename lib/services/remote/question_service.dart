@@ -40,6 +40,7 @@ class QuestionService {
         )
         .eq('subject', subjectId)
         .order('year')
+        .order('batch')
         .order('sn', ascending: true);
 
     log("result: $response");

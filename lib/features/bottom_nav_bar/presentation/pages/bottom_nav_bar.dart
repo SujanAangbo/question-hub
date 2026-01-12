@@ -10,11 +10,11 @@ class BottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AutoTabsScaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          context.router.push(DemoUi());
-        },
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     context.router.push(DemoUi());
+      //   },
+      // ),
       routes: [HomeRoute(), BookmarkRoute(), SettingsRoute()],
       bottomNavigationBuilder: (context, router) => Column(
         mainAxisSize: MainAxisSize.min,

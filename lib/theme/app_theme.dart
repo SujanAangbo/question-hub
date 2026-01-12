@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:question_hub/theme/text_theme.dart';
 
 import 'color_palette.dart';
 
 class AppTheme {
-  static OutlineInputBorder border(final Color color) => OutlineInputBorder(
+  static OutlineInputBorder _border(Color color) => OutlineInputBorder(
     borderRadius: BorderRadius.circular(12),
-    borderSide: BorderSide(color: color, width: 2),
+    borderSide: BorderSide(color: color, width: 1.5),
   );
 
-  static ThemeData theme(BuildContext context) => ThemeData(
-    fontFamily: 'Inter',
+  static final ThemeData lightTheme = ThemeData(
     useMaterial3: true,
-    scaffoldBackgroundColor: ColorPalette.onSecondary,
-    colorScheme: ColorScheme.light(
+    brightness: Brightness.light,
+    fontFamily: 'Inter',
+
+    colorScheme: const ColorScheme.light(
       primary: ColorPalette.primary,
       onPrimary: ColorPalette.onPrimary,
       secondary: ColorPalette.secondary,
@@ -26,41 +28,63 @@ class AppTheme {
       onError: ColorPalette.onError,
       outline: ColorPalette.outline,
     ),
+
     textTheme: interTextTheme,
 
-    // scaffoldBackgroundColor: ColorPalette.backgroundColor,
     appBarTheme: AppBarTheme(
       backgroundColor: ColorPalette.primary,
-      foregroundColor: ColorPalette.white,
-      titleTextStyle: Theme.of(context).textTheme.headlineMedium?.copyWith(
+      foregroundColor: ColorPalette.onPrimary,
+      elevation: 0,
+      systemOverlayStyle: SystemUiOverlayStyle.light,
+      // titleTextStyle: Theme.of(context).textTheme.headlineMedium?.copyWith(
+      //   color: ColorPalette.onPrimary,
+      //   fontFamily: 'PlayFair',
+      //   fontSize: 26,
+      // ),
+      titleTextStyle: interTextTheme.headlineMedium?.copyWith(
         color: ColorPalette.onPrimary,
         fontFamily: 'PlayFair',
         fontSize: 26,
       ),
-      elevation: 0,
     ),
-    floatingActionButtonTheme: const FloatingActionButtonThemeData(
-      // backgroundColor: ColorPalette.blueColor,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(100)),
+
+    scaffoldBackgroundColor: ColorPalette.surface,
+
+    inputDecorationTheme: InputDecorationTheme(
+      enabledBorder: _border(ColorPalette.outline),
+      focusedBorder: _border(ColorPalette.primary),
+      errorBorder: _border(ColorPalette.error),
+      focusedErrorBorder: _border(ColorPalette.error),
+      hintStyle: TextStyle(color: ColorPalette.hintColor),
+    ),
+
+    filledButtonTheme: FilledButtonThemeData(
+      style: FilledButton.styleFrom(
+        backgroundColor: ColorPalette.primary,
+        foregroundColor: ColorPalette.onPrimary,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
       ),
     ),
-    inputDecorationTheme: InputDecorationTheme(
-      enabledBorder: border(ColorPalette.outline),
-      disabledBorder: border(ColorPalette.disabled),
-      focusedBorder: border(ColorPalette.primary),
-      errorBorder: border(ColorPalette.error),
-      focusedErrorBorder: border(ColorPalette.primary),
-      hintStyle: Theme.of(
-        context,
-      ).textTheme.bodyLarge!.copyWith(color: ColorPalette.hintColor),
+
+    listTileTheme: ListTileThemeData(
+      titleTextStyle: TextStyle(
+        color: ColorPalette.onSurface,
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
+      ),
+      subtitleTextStyle: TextStyle(
+        color: ColorPalette.onSurface.withValues(alpha: 0.7),
+        fontSize: 14,
+      ),
     ),
   );
 
-  static ThemeData darkTheme(BuildContext context) => ThemeData(
+  static final ThemeData darkTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.dark,
-    colorScheme: ColorScheme.dark(
+    fontFamily: 'Inter',
+
+    colorScheme: const ColorScheme.dark(
       primary: ColorPalette.primaryDark,
       onPrimary: ColorPalette.onPrimaryDark,
       secondary: ColorPalette.secondaryDark,
@@ -73,33 +97,48 @@ class AppTheme {
       onError: ColorPalette.onErrorDark,
       outline: ColorPalette.outlineDark,
     ),
+
+    scaffoldBackgroundColor: ColorPalette.primaryDark,
     textTheme: interTextTheme,
-    // scaffoldBackgroundColor: ColorPalette.backgroundColor,
     appBarTheme: AppBarTheme(
-      backgroundColor: Theme.of(context).primaryColor,
-      foregroundColor: Theme.of(context).colorScheme.onPrimary,
-      titleTextStyle: Theme.of(context).textTheme.headlineMedium?.copyWith(
-        color: Theme.of(context).colorScheme.onPrimary,
+      backgroundColor: ColorPalette.surfaceDark,
+      foregroundColor: ColorPalette.onSurfaceDark,
+      elevation: 0,
+      systemOverlayStyle: SystemUiOverlayStyle(
+        systemNavigationBarColor: ColorPalette.primaryDark,
+        statusBarIconBrightness: Brightness.light,
+      ),
+      titleTextStyle: interTextTheme.headlineMedium?.copyWith(
+        color: ColorPalette.onPrimaryDark,
         fontFamily: 'PlayFair',
         fontSize: 26,
       ),
-      elevation: 0,
     ),
-    floatingActionButtonTheme: const FloatingActionButtonThemeData(
-      // backgroundColor: ColorPalette.blueColor,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(100)),
-      ),
+
+    switchTheme: SwitchThemeData(
+      trackColor: WidgetStateProperty.all(ColorPalette.onPrimaryDark),
+      thumbColor: WidgetStateProperty.all(ColorPalette.primaryDark),
+      trackOutlineColor: WidgetStatePropertyAll(ColorPalette.outlineDark),
     ),
+
     inputDecorationTheme: InputDecorationTheme(
-      enabledBorder: border(ColorPalette.outline),
-      disabledBorder: border(ColorPalette.disabled),
-      focusedBorder: border(ColorPalette.primary),
-      errorBorder: border(ColorPalette.error),
-      focusedErrorBorder: border(ColorPalette.primary),
-      hintStyle: Theme.of(
-        context,
-      ).textTheme.bodyLarge!.copyWith(color: ColorPalette.hintColor),
+      enabledBorder: _border(ColorPalette.outlineDark),
+      focusedBorder: _border(ColorPalette.secondaryDark),
+      errorBorder: _border(ColorPalette.errorDark),
+      focusedErrorBorder: _border(ColorPalette.errorDark),
+      hintStyle: TextStyle(color: ColorPalette.outlineDark),
+    ),
+
+    listTileTheme: ListTileThemeData(
+      titleTextStyle: TextStyle(
+        color: ColorPalette.onSurfaceDark,
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
+      ),
+      subtitleTextStyle: TextStyle(
+        color: ColorPalette.onSurfaceDark.withValues(alpha: 0.7),
+        fontSize: 14,
+      ),
     ),
   );
 }

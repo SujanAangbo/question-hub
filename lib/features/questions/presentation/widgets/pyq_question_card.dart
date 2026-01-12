@@ -10,6 +10,7 @@ import 'package:question_hub/core/common/styles.dart';
 import 'package:question_hub/core/enums/question_type.dart';
 import 'package:question_hub/features/bookmark/presentation/providers/bookmark_provider.dart';
 import 'package:question_hub/features/bookmark/presentation/providers/doubt_provider.dart';
+import 'package:question_hub/features/questions/presentation/widgets/report_dialog.dart';
 
 import '../../../../models/pyq_model.dart';
 import '../../../../utils/ui/sized_box.dart';
@@ -82,7 +83,18 @@ class PYQQuestionCard extends StatelessWidget {
                     );
                   },
                 ),
-                IconButton(onPressed: () {}, icon: Icon(Icons.person)),
+                IconButton(
+                  onPressed: () {
+                    context.router.pop();
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return ReportDialog(pyq: pyq);
+                      },
+                    );
+                  },
+                  icon: Icon(Icons.report_gmailerrorred),
+                ),
               ],
             );
           },
