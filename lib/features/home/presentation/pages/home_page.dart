@@ -64,40 +64,41 @@ class HomePage extends ConsumerWidget {
 }
 
 class YearWiseSubjectWidget extends StatelessWidget {
-  YearWiseSubjectWidget({
-    super.key,
-    required this.subjects,
-    required this.semester,
-  });
+  YearWiseSubjectWidget({super.key, required this.subjects, this.semester});
 
   List<SubjectModel> subjects;
-  int semester;
+  int? semester;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Consumer(
-          builder: (context, ref, child) {
-            final courseNotifier = ref.watch(courseProvider);
-            return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-              child: RichText(
-                text: TextSpan(
-                  text: "${courseNotifier.value?.selectedCourse?.type.text}: ",
-                  style: Theme.of(context).textTheme.headlineMedium,
-                  children: [
-                    TextSpan(
-                      text: '$semester',
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                  ],
+        if (semester != null)
+          Consumer(
+            builder: (context, ref, child) {
+              final courseNotifier = ref.watch(courseProvider);
+              return Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 16,
+                  horizontal: 16,
                 ),
-              ),
-            );
-          },
-        ),
+                child: RichText(
+                  text: TextSpan(
+                    text:
+                        "${courseNotifier.value?.selectedCourse?.type.text}: ",
+                    style: Theme.of(context).textTheme.headlineMedium,
+                    children: [
+                      TextSpan(
+                        text: '$semester',
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
         AppHorizontalDivider(color: ColorPalette.disabled),
 
         ListView.separated(

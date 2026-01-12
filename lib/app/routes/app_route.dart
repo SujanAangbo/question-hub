@@ -20,6 +20,7 @@ class AppRouter extends RootStackRouter {
     AutoRoute(page: OnboardingRoute.page, path: '/onboarding'),
     AutoRoute(page: NoInternetRoute.page, path: '/no_internet'),
     AutoRoute(page: BookmarkRoute.page, path: '/bookmark'),
+    AutoRoute(page: SearchRoute.page, path: '/search'),
     AutoRoute(page: SplashRoute.page, path: '/splash', initial: true),
   ];
 }

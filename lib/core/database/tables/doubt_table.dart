@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart';
 
 import 'converter.dart';
+import 'tables.dart';
 
 class DoubtTable extends Table {
   TextColumn get id => text()();
@@ -9,6 +10,10 @@ class DoubtTable extends Table {
   @JsonKey('is_solved')
   BoolColumn get isSolved =>
       boolean().withDefault(Constant(false)).nullable()();
+
+  @JsonKey('course_id')
+  IntColumn get courseId =>
+      integer().named('course_id').references(CourseTable, #id)();
 
   @JsonKey('created_at')
   TextColumn get createdAt => text().named('created_at')();

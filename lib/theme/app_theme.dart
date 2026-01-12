@@ -52,6 +52,7 @@ class AppTheme {
 
     inputDecorationTheme: InputDecorationTheme(
       enabledBorder: _border(ColorPalette.outline),
+      disabledBorder: _border(ColorPalette.outline),
       focusedBorder: _border(ColorPalette.primary),
       errorBorder: _border(ColorPalette.error),
       focusedErrorBorder: _border(ColorPalette.error),
@@ -123,6 +124,7 @@ class AppTheme {
 
     inputDecorationTheme: InputDecorationTheme(
       enabledBorder: _border(ColorPalette.outlineDark),
+      disabledBorder: _border(ColorPalette.outlineDark),
       focusedBorder: _border(ColorPalette.secondaryDark),
       errorBorder: _border(ColorPalette.errorDark),
       focusedErrorBorder: _border(ColorPalette.errorDark),

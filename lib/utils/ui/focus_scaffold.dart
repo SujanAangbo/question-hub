@@ -74,6 +74,7 @@ class FocusScaffold extends StatelessWidget {
     return Container(
       color: Theme.of(context).primaryColor,
       child: SafeArea(
+        bottom: false,
         child: GestureDetector(
           onTap: () {
             FocusScope.of(context).unfocus();

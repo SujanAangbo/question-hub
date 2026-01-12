@@ -19,7 +19,7 @@ class ColorPalette {
   static const Color error = Color(0xFFBA1A1A);
   static const Color onError = Color(0xFFFFFFFF);
 
-  static const Color outline = Color(0xFF757680);
+  static const Color outline = Color(0xFF9495A1);
 
   /// dark theme colors
   static const Color primaryDark = Color(0xFF000000);
