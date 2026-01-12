@@ -29,7 +29,10 @@ class HomePage extends ConsumerWidget {
             state.when(
               data: (data) {
                 if (data.isEmpty) {
-                  return Center(child: Text('No subjects found'));
+                  return SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.6,
+                    child: Center(child: Text('No subjects found')),
+                  );
                 }
                 return ListView.builder(
                   itemCount: data.keys.length,
@@ -50,10 +53,16 @@ class HomePage extends ConsumerWidget {
                 );
               },
               error: (err, st) {
-                return Center(child: Text(err.toString()));
+                return SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.6,
+                  child: Center(child: Text(err.toString())),
+                );
               },
               loading: () {
-                return Center(child: CircularProgressIndicator());
+                return SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.6,
+                  child: Center(child: CircularProgressIndicator()),
+                );
               },
             ),
           ],

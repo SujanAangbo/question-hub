@@ -34,10 +34,10 @@ class BookmarkRepositoryImpl implements BookmarkRepository {
   }
 
   @override
-  Stream<List<QuestionTableData>> getQuestions() {
+  Stream<List<QuestionTableData>> getQuestions(int courseId) {
     try {
       print('here inside getQuestion');
-      return _questionLocalService.getQuestionsStream();
+      return _questionLocalService.getQuestionsStream(courseId);
     } on PostgrestException catch (e) {
       print(e.toString());
 

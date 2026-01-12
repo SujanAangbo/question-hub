@@ -7,11 +7,11 @@ import '../../../../models/question_model.dart';
 abstract class DoubtRepository {
   Future<Result<List<DoubtQuestionModel>>> getDoubtQuestions();
 
-  Stream<List<DoubtTableData>> getDoubtQuestionsStream();
+  Stream<List<DoubtTableData>> getDoubtQuestionsStream(int courseId);
 
   Future<Result<bool>> isDoubtQuestion(String questionId);
 
-  Future<Result<bool>> doubtQuestion(QuestionModel question);
+  Future<Result<bool>> doubtQuestion(QuestionModel question, int courseId);
 
   Future<Result<bool>> updateDoubtStatus(DoubtQuestionModel question);
 

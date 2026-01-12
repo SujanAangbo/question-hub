@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:question_hub/core/database/app_database.dart';
 import 'package:question_hub/core/response/result.dart';
@@ -20,9 +18,9 @@ class BookmarkRepositoryImpl implements DoubtRepository {
   BookmarkRepositoryImpl(this._localService);
 
   @override
-  Stream<List<DoubtTableData>> getDoubtQuestionsStream() {
+  Stream<List<DoubtTableData>> getDoubtQuestionsStream(int courseId) {
     try {
-      return _localService.getDoubtQuestionsStream();
+      return _localService.getDoubtQuestionsStream(courseId);
     } on PostgrestException catch (e) {
       print(e.toString());
 
@@ -64,13 +62,17 @@ class BookmarkRepositoryImpl implements DoubtRepository {
   }
 
   @override
-  Future<Result<bool>> doubtQuestion(QuestionModel question) async {
+  Future<Result<bool>> doubtQuestion(
+    QuestionModel question,
+    int courseId,
+  ) async {
     try {
-      print("here inside doubt");
       final data = DoubtTableData.fromJson(
-        question.toJson(),
-      ).copyWith(createdAt: DateTime.now().toIso8601String());
-      log("The data is : $data");
+        question.toJson()..addAll({
+          'course_id': courseId,
+          'created_at': DateTime.now().toIso8601String(),
+        }),
+      );
       await _localService.createDoubt(data);
       return Result.success(true);
     } on PostgrestException catch (e) {
@@ -89,7 +91,6 @@ class BookmarkRepositoryImpl implements DoubtRepository {
       final data = DoubtTableData.fromJson(
         question.toJson(),
       ).copyWith(createdAt: DateTime.now().toIso8601String());
-      log("The data is : $data");
       await _localService.updateDoubtStatus(data);
       return Result.success(true);
     } on PostgrestException catch (e) {

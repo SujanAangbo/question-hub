@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$DoubtQuestionModel {
 
- String get id; List<QuestionBlockModel> get content; String get marks; bool get isSolved; String get createdAt; String get updatedAt;
+ String get id; List<QuestionBlockModel> get content; String get marks; int get courseId; bool get isSolved; String get createdAt; String get updatedAt;
 /// Create a copy of DoubtQuestionModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $DoubtQuestionModelCopyWith<DoubtQuestionModel> get copyWith => _$DoubtQuestionM
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is DoubtQuestionModel&&(identical(other.id, id) || other.id == id)&&const DeepCollectionEquality().equals(other.content, content)&&(identical(other.marks, marks) || other.marks == marks)&&(identical(other.isSolved, isSolved) || other.isSolved == isSolved)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DoubtQuestionModel&&(identical(other.id, id) || other.id == id)&&const DeepCollectionEquality().equals(other.content, content)&&(identical(other.marks, marks) || other.marks == marks)&&(identical(other.courseId, courseId) || other.courseId == courseId)&&(identical(other.isSolved, isSolved) || other.isSolved == isSolved)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,const DeepCollectionEquality().hash(content),marks,isSolved,createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,id,const DeepCollectionEquality().hash(content),marks,courseId,isSolved,createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'DoubtQuestionModel(id: $id, content: $content, marks: $marks, isSolved: $isSolved, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'DoubtQuestionModel(id: $id, content: $content, marks: $marks, courseId: $courseId, isSolved: $isSolved, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $DoubtQuestionModelCopyWith<$Res>  {
   factory $DoubtQuestionModelCopyWith(DoubtQuestionModel value, $Res Function(DoubtQuestionModel) _then) = _$DoubtQuestionModelCopyWithImpl;
 @useResult
 $Res call({
- String id, List<QuestionBlockModel> content, String marks, bool isSolved, String createdAt, String updatedAt
+ String id, List<QuestionBlockModel> content, String marks, int courseId, bool isSolved, String createdAt, String updatedAt
 });
 
 
@@ -65,12 +65,13 @@ class _$DoubtQuestionModelCopyWithImpl<$Res>
 
 /// Create a copy of DoubtQuestionModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? content = null,Object? marks = null,Object? isSolved = null,Object? createdAt = null,Object? updatedAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? content = null,Object? marks = null,Object? courseId = null,Object? isSolved = null,Object? createdAt = null,Object? updatedAt = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
 as List<QuestionBlockModel>,marks: null == marks ? _self.marks : marks // ignore: cast_nullable_to_non_nullable
-as String,isSolved: null == isSolved ? _self.isSolved : isSolved // ignore: cast_nullable_to_non_nullable
+as String,courseId: null == courseId ? _self.courseId : courseId // ignore: cast_nullable_to_non_nullable
+as int,isSolved: null == isSolved ? _self.isSolved : isSolved // ignore: cast_nullable_to_non_nullable
 as bool,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as String,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as String,
@@ -158,10 +159,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  List<QuestionBlockModel> content,  String marks,  bool isSolved,  String createdAt,  String updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  List<QuestionBlockModel> content,  String marks,  int courseId,  bool isSolved,  String createdAt,  String updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _DoubtQuestionModel() when $default != null:
-return $default(_that.id,_that.content,_that.marks,_that.isSolved,_that.createdAt,_that.updatedAt);case _:
+return $default(_that.id,_that.content,_that.marks,_that.courseId,_that.isSolved,_that.createdAt,_that.updatedAt);case _:
   return orElse();
 
 }
@@ -179,10 +180,10 @@ return $default(_that.id,_that.content,_that.marks,_that.isSolved,_that.createdA
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  List<QuestionBlockModel> content,  String marks,  bool isSolved,  String createdAt,  String updatedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  List<QuestionBlockModel> content,  String marks,  int courseId,  bool isSolved,  String createdAt,  String updatedAt)  $default,) {final _that = this;
 switch (_that) {
 case _DoubtQuestionModel():
-return $default(_that.id,_that.content,_that.marks,_that.isSolved,_that.createdAt,_that.updatedAt);case _:
+return $default(_that.id,_that.content,_that.marks,_that.courseId,_that.isSolved,_that.createdAt,_that.updatedAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -199,10 +200,10 @@ return $default(_that.id,_that.content,_that.marks,_that.isSolved,_that.createdA
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  List<QuestionBlockModel> content,  String marks,  bool isSolved,  String createdAt,  String updatedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  List<QuestionBlockModel> content,  String marks,  int courseId,  bool isSolved,  String createdAt,  String updatedAt)?  $default,) {final _that = this;
 switch (_that) {
 case _DoubtQuestionModel() when $default != null:
-return $default(_that.id,_that.content,_that.marks,_that.isSolved,_that.createdAt,_that.updatedAt);case _:
+return $default(_that.id,_that.content,_that.marks,_that.courseId,_that.isSolved,_that.createdAt,_that.updatedAt);case _:
   return null;
 
 }
@@ -214,7 +215,7 @@ return $default(_that.id,_that.content,_that.marks,_that.isSolved,_that.createdA
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class _DoubtQuestionModel implements DoubtQuestionModel {
-  const _DoubtQuestionModel({required this.id, required final  List<QuestionBlockModel> content, required this.marks, required this.isSolved, required this.createdAt, required this.updatedAt}): _content = content;
+  const _DoubtQuestionModel({required this.id, required final  List<QuestionBlockModel> content, required this.marks, required this.courseId, required this.isSolved, required this.createdAt, required this.updatedAt}): _content = content;
   factory _DoubtQuestionModel.fromJson(Map<String, dynamic> json) => _$DoubtQuestionModelFromJson(json);
 
 @override final  String id;
@@ -226,6 +227,7 @@ class _DoubtQuestionModel implements DoubtQuestionModel {
 }
 
 @override final  String marks;
+@override final  int courseId;
 @override final  bool isSolved;
 @override final  String createdAt;
 @override final  String updatedAt;
@@ -243,16 +245,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DoubtQuestionModel&&(identical(other.id, id) || other.id == id)&&const DeepCollectionEquality().equals(other._content, _content)&&(identical(other.marks, marks) || other.marks == marks)&&(identical(other.isSolved, isSolved) || other.isSolved == isSolved)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DoubtQuestionModel&&(identical(other.id, id) || other.id == id)&&const DeepCollectionEquality().equals(other._content, _content)&&(identical(other.marks, marks) || other.marks == marks)&&(identical(other.courseId, courseId) || other.courseId == courseId)&&(identical(other.isSolved, isSolved) || other.isSolved == isSolved)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,const DeepCollectionEquality().hash(_content),marks,isSolved,createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,id,const DeepCollectionEquality().hash(_content),marks,courseId,isSolved,createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'DoubtQuestionModel(id: $id, content: $content, marks: $marks, isSolved: $isSolved, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'DoubtQuestionModel(id: $id, content: $content, marks: $marks, courseId: $courseId, isSolved: $isSolved, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -263,7 +265,7 @@ abstract mixin class _$DoubtQuestionModelCopyWith<$Res> implements $DoubtQuestio
   factory _$DoubtQuestionModelCopyWith(_DoubtQuestionModel value, $Res Function(_DoubtQuestionModel) _then) = __$DoubtQuestionModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, List<QuestionBlockModel> content, String marks, bool isSolved, String createdAt, String updatedAt
+ String id, List<QuestionBlockModel> content, String marks, int courseId, bool isSolved, String createdAt, String updatedAt
 });
 
 
@@ -280,12 +282,13 @@ class __$DoubtQuestionModelCopyWithImpl<$Res>
 
 /// Create a copy of DoubtQuestionModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? content = null,Object? marks = null,Object? isSolved = null,Object? createdAt = null,Object? updatedAt = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? content = null,Object? marks = null,Object? courseId = null,Object? isSolved = null,Object? createdAt = null,Object? updatedAt = null,}) {
   return _then(_DoubtQuestionModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,content: null == content ? _self._content : content // ignore: cast_nullable_to_non_nullable
 as List<QuestionBlockModel>,marks: null == marks ? _self.marks : marks // ignore: cast_nullable_to_non_nullable
-as String,isSolved: null == isSolved ? _self.isSolved : isSolved // ignore: cast_nullable_to_non_nullable
+as String,courseId: null == courseId ? _self.courseId : courseId // ignore: cast_nullable_to_non_nullable
+as int,isSolved: null == isSolved ? _self.isSolved : isSolved // ignore: cast_nullable_to_non_nullable
 as bool,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as String,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as String,

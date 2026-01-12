@@ -34,9 +34,9 @@ class QuestionLocalService {
     return response != null;
   }
 
-  Stream<List<QuestionTableData>> getQuestionsStream() {
-    return _database
-        .select(_database.questionTable)
+  Stream<List<QuestionTableData>> getQuestionsStream(int courseId) {
+    return (_database.select(_database.questionTable)
+          ..where((question) => question.courseId.equals(courseId)))
         .watch()
         .asBroadcastStream();
   }
@@ -62,10 +62,10 @@ class QuestionLocalService {
     return true;
   }
 
-  Future<bool> removeQuestion(QuestionTableData question) async {
+  Future<bool> removeQuestion(String questionId) async {
     final response = await (_database.delete(
       _database.questionTable,
-    )..where((e) => e.id.equals(question.id))).goAndReturn();
+    )..where((e) => e.id.equals(questionId))).goAndReturn();
 
     return response.isNotEmpty;
   }

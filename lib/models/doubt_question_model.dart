@@ -11,6 +11,7 @@ abstract class DoubtQuestionModel with _$DoubtQuestionModel {
     required String id,
     required List<QuestionBlockModel> content,
     required String marks,
+    required int courseId,
     required bool isSolved,
     required String createdAt,
     required String updatedAt,

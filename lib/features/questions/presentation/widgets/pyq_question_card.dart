@@ -45,7 +45,7 @@ class PYQQuestionCard extends StatelessWidget {
                         } else {
                           ref
                               .read(questionProvider.notifier)
-                              .addToBookmark(context, pyq.question);
+                              .addToBookmark(context, pyq.question, pyq.course);
                         }
                         context.router.pop();
                       },
@@ -74,7 +74,7 @@ class PYQQuestionCard extends StatelessWidget {
                         }
                         ref
                             .read(doubtProvider.notifier)
-                            .addDoubt(context, pyq.question);
+                            .addDoubt(context, pyq.question, pyq.course);
                       },
                       icon: Icon(
                         Icons.question_mark,

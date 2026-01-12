@@ -33,7 +33,7 @@ class AppTheme {
 
     appBarTheme: AppBarTheme(
       backgroundColor: ColorPalette.primary,
-      foregroundColor: ColorPalette.onPrimary,
+      foregroundColor: ColorPalette.surface,
       elevation: 0,
       systemOverlayStyle: SystemUiOverlayStyle.light,
       // titleTextStyle: Theme.of(context).textTheme.headlineMedium?.copyWith(
@@ -42,7 +42,7 @@ class AppTheme {
       //   fontSize: 26,
       // ),
       titleTextStyle: interTextTheme.headlineMedium?.copyWith(
-        color: ColorPalette.onPrimary,
+        color: ColorPalette.surface,
         fontFamily: 'PlayFair',
         fontSize: 26,
       ),
@@ -65,6 +65,17 @@ class AppTheme {
         foregroundColor: ColorPalette.onPrimary,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
       ),
+    ),
+
+    iconButtonTheme: IconButtonThemeData(
+      style: ButtonStyle(
+        foregroundColor: WidgetStateProperty.all(ColorPalette.onSurface),
+      ),
+    ),
+
+    tabBarTheme: TabBarThemeData(
+      labelColor: ColorPalette.white,
+      unselectedLabelColor: ColorPalette.outline,
     ),
 
     listTileTheme: ListTileThemeData(
@@ -129,6 +140,17 @@ class AppTheme {
       errorBorder: _border(ColorPalette.errorDark),
       focusedErrorBorder: _border(ColorPalette.errorDark),
       hintStyle: TextStyle(color: ColorPalette.outlineDark),
+    ),
+
+    iconButtonTheme: IconButtonThemeData(
+      style: ButtonStyle(
+        foregroundColor: WidgetStateProperty.all(ColorPalette.surfaceDark),
+      ),
+    ),
+
+    tabBarTheme: TabBarThemeData(
+      labelColor: ColorPalette.white,
+      unselectedLabelColor: ColorPalette.outlineDark,
     ),
 
     listTileTheme: ListTileThemeData(

@@ -40,8 +40,12 @@ class DoubtLocalService {
   }
 
   /// to get all the doubt question in stream
-  Stream<List<DoubtTableData>> getDoubtQuestionsStream() {
-    return _database.select(_database.doubtTable).watch().asBroadcastStream();
+  Stream<List<DoubtTableData>> getDoubtQuestionsStream(int courseId) {
+    return (_database.select(_database.doubtTable)..where((question) {
+          return question.courseId.equals(courseId);
+        }))
+        .watch()
+        .asBroadcastStream();
   }
 
   Future<bool> createDoubt(DoubtTableData question) async {

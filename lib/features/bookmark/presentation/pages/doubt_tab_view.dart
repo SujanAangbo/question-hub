@@ -33,6 +33,7 @@ class DoubtTabView extends ConsumerWidget {
                 createdAt: questionData.createdAt,
                 updatedAt: questionData.updatedAt,
                 isSolved: questionData.isSolved ?? false,
+                courseId: questionData.courseId,
               );
               return DoubtQuestionCard(question: question, sn: index + 1);
             },

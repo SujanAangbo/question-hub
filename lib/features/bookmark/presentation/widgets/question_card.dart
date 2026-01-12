@@ -7,11 +7,14 @@ import 'package:gpt_markdown/gpt_markdown.dart';
 import 'package:popover/popover.dart';
 import 'package:question_hub/core/common/styles.dart';
 import 'package:question_hub/features/bookmark/presentation/providers/bookmark_provider.dart';
+import 'package:question_hub/features/course/presentation/providers/course_provider.dart';
 import 'package:question_hub/utils/ui/sized_box.dart';
 
+import '../../../../core/common/snackbar.dart';
 import '../../../../core/enums/question_type.dart';
 import '../../../../models/question_model.dart';
 import '../../../questions/presentation/providers/question_provider.dart';
+import '../providers/doubt_provider.dart';
 
 class QuestionCard extends StatelessWidget {
   final QuestionModel question;
@@ -43,7 +46,15 @@ class QuestionCard extends StatelessWidget {
                         } else {
                           ref
                               .read(questionProvider.notifier)
-                              .addToBookmark(context, question);
+                              .addToBookmark(
+                                context,
+                                question,
+                                ref
+                                    .read(courseProvider)
+                                    .value!
+                                    .selectedCourse!
+                                    .id,
+                              );
                         }
                         context.router.pop();
                       },
@@ -55,11 +66,47 @@ class QuestionCard extends StatelessWidget {
                     );
                   },
                 ),
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.favorite_outline),
+                Consumer(
+                  builder: (context, ref, child) {
+                    final isContains = ref.watch(
+                      isQuestionDoubtedProvider(question.id),
+                    );
+                    return IconButton(
+                      onPressed: () {
+                        if (isContains) {
+                          showSnackBar(
+                            context: context,
+                            message: "Question is already in doubt list",
+                            status: SnackBarStatus.error,
+                          );
+                          return;
+                        }
+
+                        final courseId = ref
+                            .read(courseProvider)
+                            .value
+                            ?.selectedCourse
+                            ?.id;
+
+                        if (courseId == null) {
+                          showSnackBar(
+                            context: context,
+                            message: "Unable to add to doubt list",
+                            status: SnackBarStatus.error,
+                          );
+                          return;
+                        }
+                        ref
+                            .read(doubtProvider.notifier)
+                            .addDoubt(context, question, courseId);
+                      },
+                      icon: Icon(
+                        Icons.question_mark,
+                        color: isContains ? Colors.green : null,
+                      ),
+                    );
+                  },
                 ),
-                IconButton(onPressed: () {}, icon: Icon(Icons.person)),
               ],
             );
           },

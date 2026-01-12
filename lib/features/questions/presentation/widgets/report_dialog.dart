@@ -1,14 +1,24 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:question_hub/features/questions/presentation/providers/question_provider.dart';
+import 'package:question_hub/models/question_model.dart';
 
 import '../../../../models/pyq_model.dart';
-import '../providers/pyq_questions_provider.dart';
 
 class ReportDialog extends StatelessWidget {
-  ReportDialog({super.key, required this.pyq});
+  ReportDialog({super.key, this.pyq, this.question}) {
+    if (pyq == null && question == null) {
+      throw 'Both pyq and question cannot be null';
+    }
 
-  final PyqModel pyq;
+    if (pyq != null && question != null) {
+      throw 'Both pyq and question cannot be non-null';
+    }
+  }
+
+  final PyqModel? pyq;
+  final QuestionModel? question;
   final TextEditingController messageController = TextEditingController();
 
   @override
@@ -37,13 +47,25 @@ class ReportDialog extends StatelessWidget {
               textColor: Theme.of(context).colorScheme.onPrimary,
               onPressed: () async {
                 // add report
-                await ref
-                    .read(pyqQuestionProvider(pyq.subject).notifier)
-                    .reportQuestion(
-                      question: pyq,
-                      message: messageController.text.trim(),
-                      context: context,
-                    );
+
+                if (pyq != null) {
+                  await ref
+                      .read(questionProvider.notifier)
+                      .reportPyqQuestion(
+                        question: pyq!,
+                        message: messageController.text.trim(),
+                        context: context,
+                      );
+                } else if (question != null) {
+                  await ref
+                      .read(questionProvider.notifier)
+                      .reportQuestion(
+                        question: question!,
+                        message: messageController.text.trim(),
+                        context: context,
+                      );
+                }
+
                 context.router.pop();
               },
               child: Text("Report"),

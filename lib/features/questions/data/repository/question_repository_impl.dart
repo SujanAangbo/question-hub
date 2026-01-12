@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:question_hub/core/database/app_database.dart';
 import 'package:question_hub/core/response/result.dart';
@@ -48,13 +46,18 @@ class QuestionRepositoryImpl implements QuestionRepository {
   }
 
   @override
-  Future<Result<bool>> bookmarkQuestion(QuestionModel question) async {
+  Future<Result<bool>> bookmarkQuestion(
+    QuestionModel question,
+    int courseId,
+  ) async {
     try {
-      log("original: ${question.toJson()}");
       final data = QuestionTableData.fromJson(
-        question.toJson(),
-      ).copyWith(createdAt: DateTime.now().toIso8601String());
-      log("The data is : $data");
+        question.toJson()..addAll({
+          'course_id': courseId,
+          'created_at': DateTime.now().toIso8601String(),
+        }),
+      );
+
       await _localService.insertQuestion(data);
       return Result.success(true);
     } on PostgrestException catch (e) {
@@ -67,12 +70,7 @@ class QuestionRepositoryImpl implements QuestionRepository {
   @override
   Future<Result<bool>> removeBookmark(QuestionModel question) async {
     try {
-      log("original: ${question.toJson()}");
-      final data = QuestionTableData.fromJson(
-        question.toJson(),
-      ).copyWith(createdAt: DateTime.now().toIso8601String());
-      log("The data is : $data");
-      final response = await _localService.removeQuestion(data);
+      final response = await _localService.removeQuestion(question.id);
       return Result.success(response);
     } on PostgrestException catch (e) {
       return Result.error(e.message);

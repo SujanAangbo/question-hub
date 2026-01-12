@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:question_hub/core/database/app_database.dart';
 import 'package:question_hub/features/bookmark/domain/repository/doubt_repository.dart';
+import 'package:question_hub/features/course/presentation/providers/course_provider.dart';
 import 'package:question_hub/models/doubt_question_model.dart';
 
 import '../../../../core/common/snackbar.dart';
@@ -16,7 +17,13 @@ import '../../data/repository/doubt_repository_impl.dart';
 final doubtProvider = AsyncNotifierProvider(() => DoubtProvider());
 
 final doubtQuestionStreamProvider = StreamProvider<List<DoubtTableData>>((ref) {
-  return ref.watch(doubtProvider.notifier).getDoubtQuestions();
+  final course = ref.watch(courseProvider).value?.selectedCourse;
+
+  if (course == null) {
+    return Stream.empty();
+  }
+
+  return ref.watch(doubtProvider.notifier).getDoubtQuestions(course.id);
 });
 
 final isQuestionDoubtedProvider = StateProviderFamily((ref, String id) {
@@ -39,8 +46,8 @@ class DoubtProvider extends AsyncNotifier<List<DoubtQuestionModel>> {
     return [];
   }
 
-  Stream<List<DoubtTableData>> getDoubtQuestions() {
-    return _doubtRepository.getDoubtQuestionsStream();
+  Stream<List<DoubtTableData>> getDoubtQuestions(int courseId) {
+    return _doubtRepository.getDoubtQuestionsStream(courseId);
   }
 
   Future<bool> isDoubtQuestion(String questionId) async {
@@ -52,8 +59,12 @@ class DoubtProvider extends AsyncNotifier<List<DoubtQuestionModel>> {
     return false;
   }
 
-  Future<void> addDoubt(BuildContext context, QuestionModel question) async {
-    final response = await _doubtRepository.doubtQuestion(question);
+  Future<void> addDoubt(
+    BuildContext context,
+    QuestionModel question,
+    int courseId,
+  ) async {
+    final response = await _doubtRepository.doubtQuestion(question, courseId);
 
     if (response.isSuccess) {
       showSnackBar(

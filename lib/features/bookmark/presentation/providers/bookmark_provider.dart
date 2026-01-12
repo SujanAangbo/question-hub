@@ -7,11 +7,18 @@ import 'package:question_hub/features/bookmark/data/repository/bookmark_reposito
 import 'package:question_hub/features/bookmark/domain/repository/bookmark_repository.dart';
 
 import '../../../../models/question_model.dart';
+import '../../../course/presentation/providers/course_provider.dart';
 
 final bookmarkProvider = AsyncNotifierProvider(() => BookmarkProvider());
 
 final questionStreamProvider = StreamProvider<List<QuestionTableData>>((ref) {
-  return ref.watch(bookmarkProvider.notifier).getBookmarkQuestions();
+  final course = ref.watch(courseProvider).value?.selectedCourse;
+
+  if (course == null) {
+    return Stream.empty();
+  }
+
+  return ref.watch(bookmarkProvider.notifier).getBookmarkQuestions(course.id);
 });
 
 final isQuestionBookmarkedProvider = StateProviderFamily((ref, String id) {
@@ -34,8 +41,8 @@ class BookmarkProvider extends AsyncNotifier<List<QuestionModel>> {
     return [];
   }
 
-  Stream<List<QuestionTableData>> getBookmarkQuestions() {
-    return _bookmarkRepository.getQuestions();
+  Stream<List<QuestionTableData>> getBookmarkQuestions(int courseId) {
+    return _bookmarkRepository.getQuestions(courseId);
   }
 
   Future<bool> isQuestionBookmarked(String questionId) async {
