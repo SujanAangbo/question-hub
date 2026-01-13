@@ -9,6 +9,7 @@ import '../../../../models/pyq_model.dart';
 import '../../../../models/subject_model.dart';
 import '../../../../theme/color_palette.dart';
 import '../widgets/group_question_widget.dart';
+import '../widgets/question_list_shimmer.dart';
 
 @RoutePage()
 class QuestionsPage extends ConsumerWidget {
@@ -75,46 +76,17 @@ class QuestionsPage extends ConsumerWidget {
           );
         },
         error: (err, st) {
-          return Center(child: Text(err.toString()));
+          return Center(
+            child: Text(
+              err.toString(),
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+          );
         },
         loading: () {
-          return Center(child: CircularProgressIndicator());
+          return QuestionListShimmer();
         },
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () async {
-      //     try {
-      //       // final service = ref.watch(pdfService(context));
-      //       // final pdfOutput = await service.generatePdf(questionsData ?? {});
-      //       //
-      //       //
-      //       // final ExportOptions overrideOptions = ExportOptions(
-      //       //   textFieldOptions: TextFieldOptions.uniform(interactive: false),
-      //       //   checkboxOptions: CheckboxOptions.uniform(interactive: false),
-      //       // );
-      //       //
-      //       // // export the frame to a PDF Document
-      //       // final pdf = await exportDelegate.exportToPdfDocument(
-      //       //   'question-frame',
-      //       //   overrideOptions: overrideOptions,
-      //       // );
-      //       // print(pdf.document);
-      //       // final data = await pdf.save();
-      //       // service.previewPdf(data);
-      //
-      //       // // export the frame to a PDF Page
-      //       // final page = await exportDelegate.exportToPdfPage('question-frame');
-      //       //
-      //       // // export the frame to a PDF Widget
-      //       // final widget = await exportDelegate.exportToPdfWidget(
-      //       //   'question-frame',
-      //       // );
-      //     } catch (e, st) {
-      //       log(e.toString(), stackTrace: st);
-      //     }
-      //   },
-      //   child: Icon(Icons.picture_as_pdf),
-      // ),
     );
   }
 }

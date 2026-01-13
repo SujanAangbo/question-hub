@@ -22,7 +22,6 @@ class HomeProvider extends AsyncNotifier<Map<int, List<SubjectModel>>> {
     );
 
     final response = formatSubjectBasedOnSemester(subjects);
-
     return response;
   }
 

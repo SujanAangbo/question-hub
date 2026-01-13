@@ -12,6 +12,7 @@ import 'package:question_hub/utils/ui/focus_scaffold.dart';
 import '../../../../models/subject_model.dart';
 import '../../../../utils/ui/app_horizontal_divider.dart';
 import '../widgets/home_header.dart';
+import '../widgets/subject_list_shimmer.dart';
 
 @RoutePage()
 class HomePage extends ConsumerWidget {
@@ -31,14 +32,18 @@ class HomePage extends ConsumerWidget {
                 if (data.isEmpty) {
                   return SizedBox(
                     height: MediaQuery.of(context).size.height * 0.6,
-                    child: Center(child: Text('No subjects found')),
+                    child: Center(
+                      child: Text(
+                        'No subjects found',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                    ),
                   );
                 }
                 return ListView.builder(
                   itemCount: data.keys.length,
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
-                  // shrinkWrap: true,
                   itemBuilder: (context, index) {
                     final key = data.keys.toList()[index];
                     final subjects = data[key] ?? [];
@@ -47,8 +52,6 @@ class HomePage extends ConsumerWidget {
                       subjects: subjects,
                       semester: key,
                     );
-
-                    // return QuestionCard(question: question);
                   },
                 );
               },
@@ -59,10 +62,7 @@ class HomePage extends ConsumerWidget {
                 );
               },
               loading: () {
-                return SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.6,
-                  child: Center(child: CircularProgressIndicator()),
-                );
+                return SubjectListShimmer();
               },
             ),
           ],

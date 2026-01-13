@@ -41,7 +41,7 @@ class OnboardingPage extends ConsumerWidget {
           body: "Get your previous year questions to increase your efficiency",
           image: Container(
             margin: EdgeInsets.only(top: 40),
-            child: Image.asset(AppAssets.logoImage),
+            child: Image.asset(AppAssets.foregroundLogoImage),
           ),
         ),
         PageViewModel(

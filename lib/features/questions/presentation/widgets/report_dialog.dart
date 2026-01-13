@@ -31,7 +31,6 @@ class ReportDialog extends StatelessWidget {
           textColor: Theme.of(context).primaryColor,
           color: Colors.transparent,
           elevation: 0,
-
           shape: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.transparent),
           ),
@@ -47,7 +46,6 @@ class ReportDialog extends StatelessWidget {
               textColor: Theme.of(context).colorScheme.onPrimary,
               onPressed: () async {
                 // add report
-
                 if (pyq != null) {
                   await ref
                       .read(questionProvider.notifier)

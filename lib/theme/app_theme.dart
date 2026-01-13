@@ -36,11 +36,6 @@ class AppTheme {
       foregroundColor: ColorPalette.surface,
       elevation: 0,
       systemOverlayStyle: SystemUiOverlayStyle.light,
-      // titleTextStyle: Theme.of(context).textTheme.headlineMedium?.copyWith(
-      //   color: ColorPalette.onPrimary,
-      //   fontFamily: 'PlayFair',
-      //   fontSize: 26,
-      // ),
       titleTextStyle: interTextTheme.headlineMedium?.copyWith(
         color: ColorPalette.surface,
         fontFamily: 'PlayFair',

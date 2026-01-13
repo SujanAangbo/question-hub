@@ -30,7 +30,6 @@ class PYQQuestionsProvider extends AsyncNotifier<Map<String, List<PyqModel>>> {
     final questions = await getQuestions(subjectId);
 
     final response = formatQuestionBasedOnYear(questions);
-
     return response;
   }
 

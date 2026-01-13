@@ -26,4 +26,5 @@ class AppAssets {
   static final String profileNetwork = '${_networkPath}/common/profile.png';
 
   static final String logoImage = '${_imgPath}/logo.png';
+  static final String foregroundLogoImage = '${_imgPath}/foreground.png';
 }

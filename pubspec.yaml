@@ -49,11 +49,7 @@ dependencies:
   path_provider: ^2.1.5
   shared_preferences: ^2.5.4
 
-  # PDF Generation
-#  pdf: ^3.11.3
-  printing: ^5.14.2
-#  flutter_widget_from_html: ^0.17.1
-  flutter_to_pdf: ^0.3.0
+  # Question Rendering
   gpt_markdown: ^1.1.4
   flutter_svg: ^2.2.3
 
@@ -75,12 +71,6 @@ dev_dependencies:
 
   # publishing
   flutter_launcher_icons: ^0.14.4
-
-flutter_launcher_icons:
-  android: true
-  ios: true
-  image_path: "assets/icon/icon.png"
-  remove_alpha_ios: true
 
 flutter:
   uses-material-design: true
