@@ -1,9 +1,10 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 class SupabaseConstants {
   SupabaseConstants._();
 
-  static String projectUrl = 'https://tfhmzoasmivitiahddvr.supabase.co';
-  static String apiKey =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRmaG16b2FzbWl2aXRpYWhkZHZyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4NDY3MjcsImV4cCI6MjA3NzQyMjcyN30.QokzPjHFhGEeXD6Fq4oyso5YdJNKnVMothMR2U4ppfo';
+  static String projectUrl = dotenv.env['PROJECTURL'] ?? '';
+  static String apiKey = dotenv.env['APIKEY'] ?? '';
 
   // tables
   static String coursesTable = 'courses';
