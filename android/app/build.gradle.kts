@@ -69,7 +69,6 @@ android {
                 name = "app_name",
                 value = "Question Hub [DEV]")
             applicationIdSuffix = ".dev"
-            versionNameSuffix = "-dev"
         }
 
         create("staging") {
@@ -78,7 +77,6 @@ android {
                 type = "string",
                 name = "app_name",
                 value = "Question Hub [STAGE]")
-            versionNameSuffix = "-staging"
         }
 
         create("production") {
