@@ -78,7 +78,6 @@ android {
                 type = "string",
                 name = "app_name",
                 value = "Question Hub [STAGE]")
-            applicationIdSuffix = ".staging"
             versionNameSuffix = "-staging"
         }
 
