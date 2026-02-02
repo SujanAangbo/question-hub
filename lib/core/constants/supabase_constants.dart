@@ -6,12 +6,19 @@ class SupabaseConstants {
   static String projectUrl = dotenv.env['PROJECTURL'] ?? '';
   static String apiKey = dotenv.env['APIKEY'] ?? '';
 
+  static String androidClientId = dotenv.env['ANDROIDCLIENTID'] ?? '';
+  static String iosClientId = dotenv.env['IOSCLIENTID'] ?? '';
+  static String webClientId = dotenv.env['WEBCLIENTID'] ?? '';
+
   // tables
   static String coursesTable = 'courses';
   static String pyqTable = 'pyq';
   static String questionsTable = 'question';
   static String subjectsTable = 'subjects';
   static String pyqReportTable = 'pyq_report';
+  static String usersTable = 'users';
+  static String commentsTable = 'comments';
+  static String commentReportTable = 'comment_reports';
 
   // buckets
   static String storagePath =
@@ -19,4 +26,6 @@ class SupabaseConstants {
   static String courseBucket = 'courses';
   static String subjectBucket = 'subjects';
   static String questionBucket = 'questions';
+  static String commentBucket = 'comments';
+  static String userBucket = 'users';
 }

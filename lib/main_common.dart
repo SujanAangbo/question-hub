@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:question_hub/app/routes/app_route.dart';
 import 'package:question_hub/core/constants/constants.dart';
@@ -13,6 +14,8 @@ import 'package:question_hub/flavor_config.dart';
 import 'package:question_hub/theme/app_theme.dart';
 import 'package:question_hub/theme/color_palette.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
+import 'app/routes/app_router.dart';
 
 ProviderContainer _globalContainer = ProviderContainer();
 Directory? directory;
@@ -42,6 +45,10 @@ void mainCommon(FlavorConfig config) async {
     ),
   );
 
+  final navKey = GlobalKey<NavigatorState>();
+
+  AppRouterHelper.init(router: _appRouter, navigatorKey: navKey);
+
   runApp(
     ProviderScope(
       overrides: [flavorConfigProvider.overrideWith((ref) => config)],
@@ -57,20 +64,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer(
-      builder: (context, ref, child) {
-        // initialize some initial requirement providers
-        ref.read(courseProvider);
+    return OKToast(
+      child: Consumer(
+        builder: (context, ref, child) {
+          // initialize some initial requirement providers
+          ref.read(courseProvider);
 
-        final isDarkMode = ref.watch(themeProvider).value ?? false;
-        return MaterialApp.router(
-          title: 'Flutter Demo',
-          routerConfig: _appRouter.config(),
-          debugShowCheckedModeBanner: false,
-          theme: isDarkMode ? AppTheme.darkTheme : AppTheme.lightTheme,
-          themeMode: isDarkMode ? ThemeMode.dark : ThemeMode.light,
-        );
-      },
+          final isDarkMode = ref.watch(themeProvider).value ?? false;
+          return MaterialApp.router(
+            title: 'Flutter Demo',
+            routerConfig: _appRouter.config(),
+            debugShowCheckedModeBanner: false,
+            theme: isDarkMode ? AppTheme.darkTheme : AppTheme.lightTheme,
+            themeMode: isDarkMode ? ThemeMode.dark : ThemeMode.light,
+          );
+        },
+      ),
     );
   }
 }

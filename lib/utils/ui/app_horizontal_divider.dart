@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:question_hub/theme/color_palette.dart';
 
 class AppHorizontalDivider extends StatelessWidget {
   const AppHorizontalDivider({
@@ -16,7 +17,7 @@ class AppHorizontalDivider extends StatelessWidget {
   Widget build(BuildContext context) {
     return Divider(
       height: height,
-      color: color,
+      color: color ?? ColorPalette.grey,
       thickness: thickness,
     );
   }

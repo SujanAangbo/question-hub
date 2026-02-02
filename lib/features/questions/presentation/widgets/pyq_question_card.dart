@@ -5,6 +5,7 @@ import 'package:flutter_html_table/flutter_html_table.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gpt_markdown/gpt_markdown.dart';
 import 'package:popover/popover.dart';
+import 'package:question_hub/app/routes/app_route.gr.dart';
 import 'package:question_hub/core/common/snackbar.dart';
 import 'package:question_hub/core/common/styles.dart';
 import 'package:question_hub/core/enums/question_type.dart';
@@ -24,6 +25,9 @@ class PYQQuestionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      onTap: () {
+        context.router.push(QuestionDetailRoute(question: pyq));
+      },
       onLongPress: () {
         showPopover(
           context: context,

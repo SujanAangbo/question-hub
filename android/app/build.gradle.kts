@@ -19,7 +19,7 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace = "com.sujan.question_hub.question_hub"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 36
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
@@ -79,7 +79,7 @@ android {
                 value = "Question Hub [STAGE]")
         }
 
-        create("production") {
+        create("prod") {
             dimension = "default"
             resValue(
                 type = "string",

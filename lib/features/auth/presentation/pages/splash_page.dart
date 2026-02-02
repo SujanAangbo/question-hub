@@ -1,9 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:question_hub/features/splash/presentation/providers/splash_provider.dart';
-
-import '../../../../app/routes/app_route.gr.dart';
+import 'package:question_hub/app/routes/app_route.gr.dart';
+import 'package:question_hub/features/auth/presentation/providers/splash_provider.dart';
 
 @RoutePage()
 class SplashPage extends ConsumerWidget {
@@ -25,6 +24,9 @@ class SplashPage extends ConsumerWidget {
             break;
           case SplashDestination.noInternet:
             context.router.replace(const NoInternetRoute());
+            break;
+          case SplashDestination.login:
+            context.router.replace(EmailLoginRoute(isPopAble: false));
             break;
         }
       });

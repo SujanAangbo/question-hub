@@ -7,7 +7,6 @@ class AppRouter extends RootStackRouter {
   List<AutoRoute> get routes => [
     AutoRoute(
       page: BottomNavBar.page,
-      // initial: true,
       path: '/bottom_nav',
       children: [
         AutoRoute(page: HomeRoute.page, path: "home"),
@@ -16,11 +15,19 @@ class AppRouter extends RootStackRouter {
       ],
     ),
     AutoRoute(page: QuestionsRoute.page, path: '/questions'),
+    AutoRoute(page: QuestionDetailRoute.page, path: '/questions_detail'),
     AutoRoute(page: DemoUi.page, path: '/demo'),
     AutoRoute(page: OnboardingRoute.page, path: '/onboarding'),
     AutoRoute(page: NoInternetRoute.page, path: '/no_internet'),
     AutoRoute(page: BookmarkRoute.page, path: '/bookmark'),
+    AutoRoute(page: EmailLoginRoute.page, path: '/email_login'),
+    AutoRoute(page: EmailSignupRoute.page, path: '/email_signup'),
+    AutoRoute(page: ForgotPasswordRoute.page, path: '/forgot_password'),
+    AutoRoute(page: ResetPasswordRoute.page, path: '/reset_password'),
+    AutoRoute(page: OtpRoute.page, path: '/otp'),
     AutoRoute(page: SearchRoute.page, path: '/search'),
+    AutoRoute(page: EditProfileRoute.page, path: '/edit_profile'),
+    AutoRoute(page: ChangePasswordRoute.page, path: '/change_password'),
     AutoRoute(page: SplashRoute.page, path: '/splash', initial: true),
   ];
 }
